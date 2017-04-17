@@ -14,12 +14,14 @@ class TPO(models.Model):
 class Passage(models.Model):
 	tpo = models.ForeignKey(TPO, on_delete=models.CASCADE)
 	title = models.CharField(max_length=200)
+	passageNumber = models.IntegerField(default=1)
 	def __str__(self):
 		return str(self.title)
-		
+
 class Paragraph(models.Model):
 	passage = models.ForeignKey(Passage, on_delete=models.CASCADE)
 	text = models.CharField(max_length=1200)
+	orderingNumber = models.IntegerField(default=1)
 	def __str__(self):
 		return str(self.text)
 	

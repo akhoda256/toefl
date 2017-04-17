@@ -1,0 +1,9 @@
+{% extends 'tpo/base.html' %}
+
+{% block content %}
+{% for paragraph in paragraphs %}
+    <div class="paragraph">
+        <p>{{ paragraph.text|linebreaksbr }}</p>
+    </div>
+{% endfor %}
+{% endblock %}
