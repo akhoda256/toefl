@@ -34,3 +34,19 @@ footer { background-color:#0c1a1e; min-height:350px; font-family: 'Open Sans', s
  .bottom_ul li { float:left; line-height:40px;}
  .bottom_ul li:after { content:"/"; color:#FFF; margin-right:8px; margin-left:8px;}
  .bottom_ul li a { color:#FFF;  font-size:12px;}
+
+
+.nav-button-ul li a{margin-right: 20px;}
+
+
+.passage-part{
+    display: flex; /* equal height of the children */
+    padding-bottom: 20px;
+}
+.passage-section {
+    border-style: solid;
+    border-width: 1px;
+  flex: 1; /* additionally, equal width */
+
+  padding: 1em;
+}
