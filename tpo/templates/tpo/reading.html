@@ -1,5 +1,32 @@
 {% extends 'tpo/base.html' %}
 
+{% block javascript %}
+  <script>
+    $("#nextQuestionForm").submit(function () {
+        console.log("salam");
+      var qNum = parseInt($("#questionNumber").val())+1;
+      console.log("salam2");
+      $.ajax({
+        url: '/tpo/ajax/getQuestion/',
+        type: 'post',
+        data: {
+            'questionNumber': qNum,
+            'tpoNumber': {{ tpoNum }},
+            'passageNumber': {{ passage.passageNumber }},
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (true) {
+            console.log(data)
+            $("#question-section").html("<p>"+ data.questionText + "</p>");
+            $("#questionNumber").attr("value", qNum);
+          }
+        }
+      });
+    return false;
+    });
+  </script>
+{% endblock %}
 
 
 {% block content %}
@@ -21,7 +48,12 @@
                             <li><a class="btn btn-default navbar-btn">HELP</a></li>
                         <li><a  class="btn btn-default navbar-btn">REVIEW</a></li>
                         <li><a  class="btn btn-default navbar-btn">BACK</a></li>
-                        <li><a  class="btn btn-default navbar-btn">NEXT</a></li>
+                        <li>
+                            <form method="post" class="navbar-form" id="nextQuestionForm">
+                                <input type="hidden" name="questionNumber" id="questionNumber" value=0>
+                                <button type="submit" class="btn btn-default navbar-btn" id="nextQuestion">NEXT</button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -35,7 +67,7 @@
     </div>
 </nav>
 <div class="passage-part">
-    <div class="passage-section col-lg-6"></div>
+    <div id="question-section" class="passage-section col-lg-6"></div>
     <div class="passage-section col-lg-6">
         <div style="text-align: center">
             <h4 style="font-weight: bold">{{ passage.title  }}</h4>

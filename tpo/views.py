@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect, render_to_response
 from django.http import HttpResponse
 from .models import Paragraph
 from .models import Passage
+from .models import Question
+
+from django.http import JsonResponse
 from django.http import HttpResponseRedirect
 # Create your views here.
 from django.views.decorators.csrf import csrf_exempt
@@ -28,8 +31,20 @@ def passageText(request, tpoNumber, passageNumber):
     tpoNum = int(tpoNumber[:len(tpoNumber)-1])
     passageNum = int(passageNumber[:len(passageNumber) - 1])
     passage = Passage.objects.get(tpo__title__exact=tpoNum, passageNumber=passageNum)
-    print passage
     paragraphs = Paragraph.objects.all().filter(passage__tpo__title__exact=tpoNum)
     paragraphs = paragraphs.filter(passage__passageNumber__exact=passageNum).order_by('orderingNumber')
-    print paragraphs
     return render_to_response('tpo/reading.html', {'paragraphs': paragraphs, 'tpoNum': tpoNum, 'passage': passage})
+
+
+
+@csrf_exempt
+def getQuestion(request):
+    questionNum = request.POST.get('questionNumber', None)
+    tpoNum = request.POST.get('tpoNumber', None)
+    passageNum = request.POST.get('passageNumber', None)
+    question = Question.objects.get(questionNumber=questionNum, paragraph__passage__passageNumber=passageNum, paragraph__passage__tpo__title=tpoNum)
+    data = {
+        'questionText': question.text
+    }
+    print JsonResponse(data)
+    return JsonResponse(data)
