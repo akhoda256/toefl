@@ -13,12 +13,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def reading(request):
-    #return HttpResponse("Hello, world. You're at the polls index.")
-    print request
+    print(request)
     data = {}
     data['passage_title'] = 1
     paragraphs = Paragraph.objects.all().filter(passage__passageNumber__exact=data['passage_title']).order_by('orderingNumber')
-    print paragraphs
+    print (paragraphs)
     return render_to_response('tpo/reading.html', {'paragraphs': paragraphs})
 	
 @csrf_exempt
@@ -50,5 +49,5 @@ def getQuestion(request):
         'questionText': question.text,
         'options': list(options)
     }
-    print JsonResponse(data)
+    print (JsonResponse(data))
     return JsonResponse(data)
