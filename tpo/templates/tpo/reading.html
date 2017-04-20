@@ -17,9 +17,17 @@
         dataType: 'json',
         success: function (data) {
           if (true) {
-            console.log(data)
+            console.log(data);
             $("#question-section").html("<p>"+ data.questionText + "</p>");
             $("#questionNumber").attr("value", qNum);
+            var formHtml = "<form>";
+            for (i = 0; i < data.options.length; i++) {
+                formHtml += "<div class=\"radio\">";
+                formHtml += "<label><input type=\"radio\" name=\"optradio\">"+ data.options[i].text + "</label>";
+                formHtml += "</div>";
+            }
+            formHtml += "</form>"
+            $("#question-section").append(formHtml);
           }
         }
       });

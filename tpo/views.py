@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .models import Paragraph
 from .models import Passage
 from .models import Question
+from .models import Option
+from django.core import serializers
 
 from django.http import JsonResponse
 from django.http import HttpResponseRedirect
@@ -43,8 +45,10 @@ def getQuestion(request):
     tpoNum = request.POST.get('tpoNumber', None)
     passageNum = request.POST.get('passageNumber', None)
     question = Question.objects.get(questionNumber=questionNum, paragraph__passage__passageNumber=passageNum, paragraph__passage__tpo__title=tpoNum)
+    options = Option.objects.all().filter(question=question).order_by('number').values('text', 'number')
     data = {
-        'questionText': question.text
+        'questionText': question.text,
+        'options': list(options)
     }
     print JsonResponse(data)
     return JsonResponse(data)
