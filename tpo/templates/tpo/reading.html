@@ -1,93 +1,87 @@
 {% extends 'tpo/base.html' %}
 
 {% block javascript %}
-  <script>
-    $("#nextQuestionForm").submit(function () {
-        console.log("salam");
-      var qNum = parseInt($("#questionNumber").val())+1;
-      console.log("salam2");
-      $.ajax({
-        url: '/tpo/ajax/getQuestion/',
-        type: 'post',
-        data: {
-            'questionNumber': qNum,
-            'tpoNumber': {{ tpoNum }},
-            'passageNumber': {{ passage.passageNumber }},
-        },
-        dataType: 'json',
-        success: function (data) {
-          if (true) {
-            console.log(data);
-            $("#question-section").html("<p>"+ data.questionText + "</p>");
-            $("#questionNumber").attr("value", qNum);
-            var formHtml = "<form>";
-            for (i = 0; i < data.options.length; i++) {
-                formHtml += "<div class=\"radio\">";
-                formHtml += "<label><input type=\"radio\" name=\"optradio\">"+ data.options[i].text + "</label>";
-                formHtml += "</div>";
-            }
-            formHtml += "</form>"
-            $("#question-section").append(formHtml);
-          }
-        }
-      });
-    return false;
-    });
-  </script>
+    <script>
+    </script>
 {% endblock %}
 
 
 {% block content %}
-{% load static %}
-    <nav class="navbar navbar-default" role="navigation">
-  <!-- Brand and toggle get grouped for better mobile display -->
-        <div>
-  <div class="navbar-header" style="text-align: center;">
-    <a class="navbar-brand" href="#">
-        <img src="{% static "images/logo.png"%}" width="40px">
-    </a>
-  </div>
-        <p class="navbar-text">TPO {{ tpoNum }} Reading</p>
+    {% load static %}
+    <form action="/tpo/q/?tpoNumber={{ tpoNum }}&passageNumber={{ passage.passageNumber }}&questionNumber={{ questionNo }}"
+          method="post" class="navbar-form" id="nextQuestionForm">
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div>
+                <div class="navbar-header" style="text-align: center;">
+                    <a class="navbar-brand" href="#">
+                        <img src="{% static "images/logo.png" %}" width="40px">
+                    </a>
+                </div>
+                <p class="navbar-text">TPO {{ tpoNum }} Reading</p>
 
-  <!-- Collect the nav links, forms, and other content for toggling -->
+                <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right nav-button-ul">
-                            <li><a class="btn btn-default navbar-btn">VIEW TEXT</a></li>
-                            <li><a class="btn btn-default navbar-btn">HELP</a></li>
-                        <li><a  class="btn btn-default navbar-btn">REVIEW</a></li>
-                        <li><a  class="btn btn-default navbar-btn">BACK</a></li>
+                        <li><a class="btn btn-default navbar-btn">VIEW TEXT</a></li>
+                        <li><a class="btn btn-default navbar-btn">HELP</a></li>
+                        <li><a class="btn btn-default navbar-btn">REVIEW</a></li>
+                        <li><a class="btn btn-default navbar-btn">BACK</a></li>
                         <li>
-                            <form method="post" class="navbar-form" id="nextQuestionForm">
-                                <input type="hidden" name="questionNumber" id="questionNumber" value=0>
-                                <button type="submit" class="btn btn-default navbar-btn" id="nextQuestion">NEXT</button>
-                            </form>
+
+                            <input type="hidden" name="questionNumber" value="{{ questionNo }}"/>
+                            <input type="hidden" name="tpoNumber" value="{{ tpoNum }}"/>
+                            <input type="hidden" name="passageNumber" value="{{ passage.passageNumber }}"/>
+                            <input type="hidden" name="choice" value="1"/>
+
+                            <button
+                                    type="submit" class="btn btn-default navbar-btn" id="nextQuestion">NEXT
+                            </button>
+
                         </li>
                     </ul>
                 </div>
             </div>
-    <div>
-        <div class="col-lg-offset-6">
-        <p class="navbar-text">Passage {{ passage.passageNum }} of 3</p>
+            <div>
+                <div class="col-lg-offset-6">
+                    <p class="navbar-text">Passage {{ passage.passageNum }} of 3</p>
+                </div>
+                <div>
+                    <p class="navbar-text navbar-right" style="margin-right:30px;">60:00</p>
+                </div>
             </div>
-        <div>
-        <p class="navbar-text navbar-right" style="margin-right:30px;">60:00</p>
+        </nav>
+        <div class="passage-part">
+            <div id="question-section" class="passage-section col-lg-6">
+                {% if question != None %}
+
+                    <p> {{ question.text }} </p>
+
+                    {% for item in options %}
+                        <div class="radio">
+                            <label>
+                                <input value="{{ item.number }}" type="radio" name="optradio">
+                                {{ item.text }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
-    </div>
-</nav>
-<div class="passage-part">
-    <div id="question-section" class="passage-section col-lg-6"></div>
-    <div class="passage-section col-lg-6">
-        <div style="text-align: center">
-            <h4 style="font-weight: bold">{{ passage.title  }}</h4>
+            <div class="passage-section col-lg-6">
+                <div style="text-align: center">
+                    <h4 style="font-weight: bold">{{ passage.title }}</h4>
+                </div>
+                {% for paragraph in paragraphs %}
+                    <div class="paragraph">
+                        {% if paragraph.id == question.paragraph_id %}
+                            <li></li>
+                        {% endif %}
+                        <p>{{ paragraph.text|linebreaksbr }}</p>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-        {% for paragraph in paragraphs %}
-    <div class="paragraph">
-        <p>{{ paragraph.text|linebreaksbr }}</p>
-    </div>
-{% endfor %}
-    </div>
-</div>
 
-
+    </form>
 
 {% endblock %}
