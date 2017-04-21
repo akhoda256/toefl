@@ -16,6 +16,7 @@ from .models import Question
 userStates = {}
 endTimes = {}
 
+
 @csrf_exempt
 def reading(request):
     print(request)
@@ -34,6 +35,7 @@ def index(request):
 
 @csrf_exempt
 def passageText(request):
+    global endTimes
     tpoNum = request.GET.get('tpoNumber', None)
     passageNum = request.GET.get('passageNumber', None)
     passage = Passage.objects.get(tpo__title__exact=tpoNum, passageNumber=passageNum)
@@ -41,14 +43,20 @@ def passageText(request):
     paragraphs = paragraphs.filter(passage__passageNumber__exact=passageNum).order_by('orderingNumber')
     startTime = datetime.now() + timedelta(hours=1)
     endTime = startTime.strftime("%Y-%m-%d %H:%M:%S")
-    if not request.session.exists(request.session.session_key):
-        request.session.create()
-        key = request.session.session_key
+    # del request.session[str(request.session.session_key)]
+    # request.session.modified = True
+    key = request.session.session_key
+    print(type(key))
+    print(type(request.session))
+    print(key)
+    if key not in endTimes:
         endTimes[key] = endTime
+    else:
+        endTime = endTimes[key]
 
     return render_to_response('tpo/reading.html',
                               {'paragraphs': paragraphs, 'tpoNum': tpoNum, 'passage': passage, 'questionNo': 0,
-                               'startTime': endTime})
+                               'endTime': endTime})
 
 
 def build_url(*args, **kwargs):
@@ -71,9 +79,16 @@ def build_url(*args, **kwargs):
 @csrf_exempt
 def getQuestion(request):
     global userStates
-    if not request.session.exists(request.session.session_key):
+    global endTimes
+    session_key = request.session.session_key
+    if not request.session.exists(session_key):
         s = build_url('tpo:passage', params={'tpoNumber': '1', 'passageNumber': '1'})
         return HttpResponseRedirect(s)
+    if session_key not in endTimes:
+        s = build_url('tpo:passage', params={'tpoNumber': '1', 'passageNumber': '1'})
+        return HttpResponseRedirect(s)
+    else:
+        endTime = endTimes[session_key]
     if (request.method == 'GET'):
         questionNum = request.GET.get('questionNumber', None)
         tpoNum = request.GET.get('tpoNumber', None)
@@ -83,11 +98,7 @@ def getQuestion(request):
         tpoNum = request.POST.get('tpoNumber', None)
         passageNum = request.POST.get('passageNumber', None)
         answer = request.POST.get('optradio', None)
-        if not request.session.exists(request.session.session_key):
-            s = build_url('tpo:passage', params={'tpoNumber': '1', 'passageNumber': '1'})
-            return HttpResponseRedirect(s)
-
-        key = request.session.session_key
+        key = session_key
         cAnswer = AnswerHistory()
         cAnswer.questionNum = questionNum
         cAnswer.answer = answer
@@ -97,6 +108,8 @@ def getQuestion(request):
         if key not in userStates:
             userState = State()
             userStates[key] = userState
+
+        endTime = endTimes[key]
 
         userState = userStates[key]
         userState.currentQuestion = questionNum
@@ -120,9 +133,7 @@ def getQuestion(request):
     paragraphs = Paragraph.objects.all().filter(passage__tpo__title__exact=tpoNum)
     paragraphs = paragraphs.filter(passage__passageNumber__exact=passageNum).order_by('orderingNumber')
 
-    # endTime = endTimes[]
-
     return render_to_response('tpo/reading.html',
                               {'tpoNum': tpoNum, 'paragraphs': paragraphs, 'passage': passage, 'question': question,
-                               'options': options, 'questionNo': questionNum})
-                               # 'endTime': endTime
+                               'options': options, 'questionNo': questionNum,
+                               'endTime': endTime})
