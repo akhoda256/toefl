@@ -69,3 +69,14 @@ class Answer(models.Model):
 
     def __str__(self):
         return str(self.answerType)
+
+
+class Conversation(models.Model):
+    tpo = models.ForeignKey(TPO, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    convNumber = models.IntegerField(default=1)
+    imgFile = models.FileField(upload_to='tpo/static/images/')
+    audioFile = models.FileField(upload_to='tpo/static/audio/')
+
+    def __str__(self):
+        return str(self.title)

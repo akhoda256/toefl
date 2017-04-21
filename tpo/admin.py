@@ -7,6 +7,7 @@ from .models import QuestionType
 from .models import Question
 from .models import Option
 from .models import Answer
+from .models import Conversation
 # Register your models here.
 admin.site.register(TPO)
 admin.site.register(Passage)
@@ -15,5 +16,6 @@ admin.site.register(QuestionType)
 admin.site.register(Question)
 admin.site.register(Option)
 admin.site.register(Answer)
+admin.site.register(Conversation)
 
 # Register your models here.

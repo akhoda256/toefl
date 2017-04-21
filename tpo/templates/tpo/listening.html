@@ -1,0 +1,122 @@
+{% extends 'tpo/base.html' %}
+
+{% block javascript %}
+    <script>
+    </script>
+{% endblock %}
+
+
+{% block content %}
+    {% load static %}
+
+    <p id="demo2">{{ endTime}}</p>
+
+    <script>
+        // Set the date we're counting down to
+        var countDownDate = new Date('{{ endTime }}').getTime();
+
+        // Update the count down every 1 second
+        var x = setInterval(function () {
+
+            // Get todays date and time
+            var now = new Date().getTime();
+
+            // Find the distance between now an the count down date
+            var distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the result in the element with id="demo"
+            document.getElementById("demo").innerHTML = minutes + "m " + seconds + "s ";
+
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("demo").innerHTML = "EXPIRED";
+            }
+        }, 1000);
+    </script>
+
+
+    <form action="/tpo/q/?tpoNumber={{ tpoNum }}&passageNumber={{ passage.passageNumber }}&questionNumber={{ questionNo }}"
+          method="post" class="navbar-form" id="nextQuestionForm">
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div>
+                <div class="navbar-header" style="text-align: center;">
+                    <a class="navbar-brand" href="#">
+                        <img src="{% static "images/logo.png" %}" width="40px">
+                    </a>
+                </div>
+                <p class="navbar-text">TPO {{ tpoNum }} Reading</p>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right nav-button-ul">
+                        <li><a class="btn btn-default navbar-btn">VIEW TEXT</a></li>
+                        <li><a class="btn btn-default navbar-btn">HELP</a></li>
+                        <li><a class="btn btn-default navbar-btn">REVIEW</a></li>
+                        <li><a class="btn btn-default navbar-btn">BACK</a></li>
+                        <li>
+
+                            <input type="hidden" name="questionNumber" value="{{ questionNo }}"/>
+                            <input type="hidden" name="tpoNumber" value="{{ tpoNum }}"/>
+                            <input type="hidden" name="passageNumber" value="{{ passage.passageNumber }}"/>
+                            <input type="hidden" name="choice" value="1"/>
+
+                            <button
+                                    type="submit" class="btn btn-default navbar-btn" id="nextQuestion">NEXT
+                            </button>
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="col-lg-offset-6">
+                    <p class="navbar-text">Passage {{ passage.passageNumber }} of 3</p>
+                </div>
+                <div>
+                    <p id="demo" class="navbar-text navbar-right" style="margin-right:30px;">60m 00s</p>
+                </div>
+            </div>
+        </nav>
+        <div class="passage-part">
+            <div id="question-section" class="passage-section col-lg-6">
+                {% if question != None %}
+
+                    <p> {{ question.text }} </p>
+
+                    {% for item in options %}
+                        <div class="radio">
+                            <label>
+                                <input value="{{ item.number }}" type="radio" name="optradio">
+                                {{ item.text }}
+                            </label>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="passage-section col-lg-6">
+                <div style="text-align: center">
+                    <h4 style="font-weight: bold">{{ passage.title }}</h4>
+                </div>
+                {% for paragraph in paragraphs %}
+                    <div class="paragraph">
+                        {% if paragraph.id == question.paragraph_id %}
+                            <li>
+                        {% endif %}
+                        <p>{{ paragraph.text|linebreaksbr }}</p>
+                        </li>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </form>
+
+{% endblock %}
