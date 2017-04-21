@@ -1,7 +1,42 @@
 {% extends 'tpo/base.html' %}
 
 {% block javascript %}
+    <style>
+        .progress.active .progress-bar {
+            -webkit-transition: none !important;
+            transition: none !important;
+        }
+
+        #myProgress {
+            width: 100%;
+            background-color: grey;
+        }
+
+        #myBar {
+            width: 1%;
+            height: 30px;
+            background-color: green;
+        }
+    </style>
     <script>
+
+
+        var elem = document.getElementById("myBar");
+        var width = 1;
+        var aud = document.getElementById("audioElement");
+        var intervalId = setInterval(frame, 10 * aud.duration);
+        function frame() {
+            if (width >= 100) {
+                clearInterval(intervalId);
+            } else {
+                width++;
+                elem.style.width = width + '%';
+            }
+        }
+
+        $(".progress-bar").animate({
+            width: "100%"
+        }, aud.duration * 1000);
     </script>
 {% endblock %}
 
@@ -9,7 +44,7 @@
 {% block content %}
     {% load static %}
 
-    <p id="demo2">{{ endTime}}</p>
+    <p id="demo2">{{ endTime }}</p>
 
 
 
@@ -52,10 +87,20 @@
             </div>
         </nav>
         <div class="listening-part">
-            <img src="{{imgPath}}">
+            <img src="{{ imgPath }}">
+            <div id="myProgress">
+                <div id="myBar"></div>
+            </div>
+
+            {#            <div class="col-xs-12 col-sm-12 progress-container">#}
+            {#                <div class="progress progress-striped active">#}
+            {#                    <div class="progress-bar progress-bar-success" style="width:0%"></div>#}
+            {#                </div>#}
+            {#            </div>#}
+
             <div>
-                <audio controls>
-                    <source src="{{audioPath}}" type="audio/mpeg">
+                <audio id="audioElement" autoplay>
+                    <source src="{{ audioPath }}" type="audio/mpeg">
                 </audio>
             </div>
         </div>

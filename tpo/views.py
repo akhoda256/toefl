@@ -149,6 +149,6 @@ def listeningAudio(request):
     imgPath = conversation.imgFile.url[ind:]
     ind = conversation.audioFile.url.find('/static')
     audioPath = conversation.audioFile.url[ind:]
-    return render_to_response('tpo/listening.html',
+    return render_to_response('tpo/listen.html',
                               {'tpoNum': tpoNum, 'conversation': conversation, 'imgPath': imgPath,
                                'audioPath': audioPath})
