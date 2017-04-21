@@ -12,6 +12,7 @@ from .models import Option
 from .models import Paragraph
 from .models import Passage
 from .models import Question
+from .models import Conversation
 
 userStates = {}
 endTimes = {}
@@ -138,20 +139,16 @@ def getQuestion(request):
                                'options': options, 'questionNo': questionNum,
                                'endTime': endTime})
 
+
 @csrf_exempt
 def listeningAudio(request):
     tpoNum = request.GET.get('tpoNumber', None)
-    passageNum = request.GET.get('passageNumber', None)
-    passage = Passage.objects.get(tpo__title__exact=tpoNum, passageNumber=passageNum)
-    paragraphs = Paragraph.objects.all().filter(passage__tpo__title__exact=tpoNum)
-    paragraphs = paragraphs.filter(passage__passageNumber__exact=passageNum).order_by('orderingNumber')
-    startTime = datetime.now() + timedelta(hours=1)
-    endTime = startTime.strftime("%Y-%m-%d %H:%M:%S")
-    if not request.session.exists(request.session.session_key):
-        request.session.create()
-        key = request.session.session_key
-        endTimes[key] = endTime
-
+    convNum = request.GET.get('convNumber', None)
+    conversation = Conversation.objects.get(tpo__title__exact=tpoNum, convNumber=convNum)
+    ind = conversation.imgFile.url.find('/static')
+    imgPath = conversation.imgFile.url[ind:]
+    ind = conversation.audioFile.url.find('/static')
+    audioPath = conversation.audioFile.url[ind:]
     return render_to_response('tpo/listening.html',
-                              {'paragraphs': paragraphs, 'tpoNum': tpoNum, 'passage': passage, 'questionNo': 0,
-                               'startTime': endTime})
+                              {'tpoNum': tpoNum, 'conversation': conversation, 'imgPath': imgPath,
+                               'audioPath': audioPath})
