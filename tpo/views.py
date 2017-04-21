@@ -1,21 +1,20 @@
-from django.shortcuts import render, redirect, render_to_response
-from django.http import HttpResponse
+from datetime import datetime, timedelta
+
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+from django.http import QueryDict
+from django.shortcuts import render_to_response
+from django.views.decorators.csrf import csrf_exempt
+
+from .classes import AnswerHistory
+from .classes import State
+from .models import Option
 from .models import Paragraph
 from .models import Passage
 from .models import Question
-from .models import Option
-from django.core import serializers
-import uuid
-from .classes import State
-from .classes import AnswerHistory
-
-from django.http import JsonResponse
-from django.http import HttpResponseRedirect
-# Create your views here.
-from django.views.decorators.csrf import csrf_exempt
 
 userStates = {}
-
+endTimes = {}
 
 @csrf_exempt
 def reading(request):
@@ -30,26 +29,51 @@ def reading(request):
 
 @csrf_exempt
 def index(request):
-    # return HttpResponse("index, world. You're at the polls index.")
-    # form = ReportForm()
     return render_to_response('tpo/base.html', {})
 
 
 @csrf_exempt
-def passageText(request, tpoNumber, passageNumber):
-    # return HttpResponse("Hello, world. You're at the polls index.")
-    tpoNum = int(tpoNumber[:len(tpoNumber) - 1])
-    passageNum = int(passageNumber[:len(passageNumber) - 1])
+def passageText(request):
+    tpoNum = request.GET.get('tpoNumber', None)
+    passageNum = request.GET.get('passageNumber', None)
     passage = Passage.objects.get(tpo__title__exact=tpoNum, passageNumber=passageNum)
     paragraphs = Paragraph.objects.all().filter(passage__tpo__title__exact=tpoNum)
     paragraphs = paragraphs.filter(passage__passageNumber__exact=passageNum).order_by('orderingNumber')
+    startTime = datetime.now() + timedelta(hours=1)
+    endTime = startTime.strftime("%Y-%m-%d %H:%M:%S")
+    if not request.session.exists(request.session.session_key):
+        request.session.create()
+        key = request.session.session_key
+        endTimes[key] = endTime
+
     return render_to_response('tpo/reading.html',
-                              {'paragraphs': paragraphs, 'tpoNum': tpoNum, 'passage': passage, 'questionNo': 0})
+                              {'paragraphs': paragraphs, 'tpoNum': tpoNum, 'passage': passage, 'questionNo': 0,
+                               'startTime': endTime})
+
+
+def build_url(*args, **kwargs):
+    params = kwargs.pop('params', {})
+    url = reverse(*args, **kwargs)
+    if not params:
+        return url
+
+    qdict = QueryDict('', mutable=True)
+    for k in params:
+        v = params[k]
+        if type(v) is list:
+            qdict.setlist(k, v)
+        else:
+            qdict[k] = v
+
+    return url + '?' + qdict.urlencode()
 
 
 @csrf_exempt
 def getQuestion(request):
     global userStates
+    if not request.session.exists(request.session.session_key):
+        s = build_url('tpo:passage', params={'tpoNumber': '1', 'passageNumber': '1'})
+        return HttpResponseRedirect(s)
     if (request.method == 'GET'):
         questionNum = request.GET.get('questionNumber', None)
         tpoNum = request.GET.get('tpoNumber', None)
@@ -59,13 +83,9 @@ def getQuestion(request):
         tpoNum = request.POST.get('tpoNumber', None)
         passageNum = request.POST.get('passageNumber', None)
         answer = request.POST.get('optradio', None)
-        # if 'ak_session_key' not in request.session:
-        #     key = uuid.uuid4()
-        #     request.session['session_key'] = key
-        #
-        # key = request.session['session_key']
         if not request.session.exists(request.session.session_key):
-            request.session.create()
+            s = build_url('tpo:passage', params={'tpoNumber': '1', 'passageNumber': '1'})
+            return HttpResponseRedirect(s)
 
         key = request.session.session_key
         cAnswer = AnswerHistory()
@@ -83,18 +103,26 @@ def getQuestion(request):
         userState.history = userState.history + [cAnswer]
         userStates[key] = userState
 
-        print(answer)
-
     questionNum = int(questionNum) + 1
+
+    passage = Passage.objects.get(tpo__title__exact=tpoNum, passageNumber=passageNum)
+
+    if questionNum > passage.questionCount:
+        passageNum = int(passageNum) + 1
+        s = build_url('tpo:passage', params={'tpoNumber': '1', 'passageNumber': passageNum})
+        return HttpResponseRedirect(s)
+
     question = Question.objects.get(questionNumber=questionNum, paragraph__passage__passageNumber=passageNum,
                                     paragraph__passage__tpo__title=tpoNum)
 
     options = Option.objects.all().filter(question=question).order_by('number').values('text', 'number')
 
-    passage = Passage.objects.get(tpo__title__exact=tpoNum, passageNumber=passageNum)
     paragraphs = Paragraph.objects.all().filter(passage__tpo__title__exact=tpoNum)
     paragraphs = paragraphs.filter(passage__passageNumber__exact=passageNum).order_by('orderingNumber')
+
+    # endTime = endTimes[]
 
     return render_to_response('tpo/reading.html',
                               {'tpoNum': tpoNum, 'paragraphs': paragraphs, 'passage': passage, 'question': question,
                                'options': options, 'questionNo': questionNum})
+                               # 'endTime': endTime
