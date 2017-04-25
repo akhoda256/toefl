@@ -15,7 +15,7 @@ class TPO(models.Model):
 
 
 class Passage(models.Model):
-    tpo = models.ForeignKey(TPO, on_delete=models.CASCADE)
+    tpo = models.ForeignKey(TPO, on_delete=models.CASCADE, default=None)
     title = models.CharField(max_length=200)
     passageNumber = models.IntegerField(default=1)
     questionCount = models.IntegerField(default=1)
@@ -25,7 +25,7 @@ class Passage(models.Model):
 
 
 class Paragraph(models.Model):
-    passage = models.ForeignKey(Passage, on_delete=models.CASCADE)
+    passage = models.ForeignKey(Passage, on_delete=models.CASCADE, default=None)
     text = models.CharField(max_length=1200)
     orderingNumber = models.IntegerField(default=1)
 
@@ -41,12 +41,18 @@ class QuestionType(models.Model):
 
 
 class Question(models.Model):
-    startHighlight = models.IntegerField(default=1)
-    endHighlight = models.IntegerField(default=1)
     questionNumber = models.IntegerField(default=1)
     text = models.CharField(max_length=1200)
-    questionType = models.ForeignKey(QuestionType, default=0)
-    paragraph = models.ForeignKey(Paragraph, on_delete=models.CASCADE)
+    questionType = models.ForeignKey(QuestionType, default=None)
+
+    def __str__(self):
+        return str(self.text)
+
+
+class ReadingQuestion(Question):
+    paragraph = models.ForeignKey(Paragraph, on_delete=models.CASCADE, default=None)
+    startHighlight = models.IntegerField(default=1)
+    endHighlight = models.IntegerField(default=1)
 
     def __str__(self):
         return str(self.text)
@@ -55,7 +61,7 @@ class Question(models.Model):
 class Option(models.Model):
     text = models.CharField(max_length=200)
     number = models.IntegerField(default=1)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, default=None)
     isAnswer = models.NullBooleanField()
 
     def __str__(self):
@@ -63,8 +69,8 @@ class Option(models.Model):
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    option = models.ForeignKey(Option, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, default=None)
+    option = models.ForeignKey(Option, on_delete=models.CASCADE, default=None)
     answerType = models.BooleanField()
 
     def __str__(self):
@@ -72,7 +78,7 @@ class Answer(models.Model):
 
 
 class Conversation(models.Model):
-    tpo = models.ForeignKey(TPO, on_delete=models.CASCADE)
+    tpo = models.ForeignKey(TPO, on_delete=models.CASCADE, default=None)
     title = models.CharField(max_length=200)
     convNumber = models.IntegerField(default=1)
     imgFile = models.FileField(upload_to='tpo/static/images/')
@@ -80,3 +86,12 @@ class Conversation(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+
+class ListeningQuestion(Question):
+    conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE, default=None)
+    questionAudioFile = models.FileField(upload_to='tpo/static/audio/')
+    preAudioFile = models.FileField(upload_to='tpo/static/audio/')
+
+    def __str__(self):
+        return str(self.text)

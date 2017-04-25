@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .classes import AnswerHistory
 from .classes import State
-from .models import Option
+from .models import Option, ReadingQuestion
 from .models import Paragraph
 from .models import Passage
 from .models import Question
@@ -78,7 +78,7 @@ def build_url(*args, **kwargs):
 
 
 @csrf_exempt
-def getQuestion(request):
+def getReadingQuestion(request):
     global userStates
     global endTimes
     session_key = request.session.session_key
@@ -126,7 +126,7 @@ def getQuestion(request):
         s = build_url('tpo:passage', params={'tpoNumber': '1', 'passageNumber': passageNum})
         return HttpResponseRedirect(s)
 
-    question = Question.objects.get(questionNumber=questionNum, paragraph__passage__passageNumber=passageNum,
+    question = ReadingQuestion.objects.get(questionNumber=questionNum, paragraph__passage__passageNumber=passageNum,
                                     paragraph__passage__tpo__title=tpoNum)
 
     options = Option.objects.all().filter(question=question).order_by('number').values('text', 'number')
@@ -152,3 +152,11 @@ def listeningAudio(request):
     return render_to_response('tpo/listen.html',
                               {'tpoNum': tpoNum, 'conversation': conversation, 'imgPath': imgPath,
                                'audioPath': audioPath})
+
+
+@csrf_exempt
+def listeningQuestion(request):
+    tpoNum = request.GET.get('tpoNumber', None)
+    convNum = request.GET.get('convNumber', None)
+    conversation = Conversation.objects.get(tpo__title__exact=tpoNum, convNumber=convNum)
+    ind = conversation.imgFile.url.find('/static')
