@@ -11,7 +11,6 @@ from .classes import State
 from .models import Option, ReadingQuestion
 from .models import Paragraph
 from .models import Passage
-from .models import Question
 from .models import Conversation
 
 userStates = {}
@@ -156,7 +155,8 @@ def listeningAudio(request):
 
 @csrf_exempt
 def listeningQuestion(request):
-    tpoNum = request.GET.get('tpoNumber', None)
-    convNum = request.GET.get('convNumber', None)
-    conversation = Conversation.objects.get(tpo__title__exact=tpoNum, convNumber=convNum)
-    ind = conversation.imgFile.url.find('/static')
+    # tpoNum = request.GET.get('tpoNumber', None)
+    # convNum = request.GET.get('convNumber', None)
+    # conversation = Conversation.objects.get(tpo__title__exact=tpoNum, convNumber=convNum)
+    # ind = conversation.imgFile.url.find('/static')
+    return render_to_response('tpo/base.html', {})

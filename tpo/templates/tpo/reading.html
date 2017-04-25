@@ -42,7 +42,7 @@
     </script>
 
 
-    <form action="/tpo/q/?tpoNumber={{ tpoNum }}&passageNumber={{ passage.passageNumber }}&questionNumber={{ questionNo }}"
+    <form action="/tpo/passage/question/?tpoNumber={{ tpoNum }}&passageNumber={{ passage.passageNumber }}&questionNumber={{ questionNo }}"
           method="post" class="navbar-form" id="nextQuestionForm">
         <nav class="navbar navbar-default" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -54,7 +54,6 @@
                 </div>
                 <p class="navbar-text">TPO {{ tpoNum }} Reading</p>
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right nav-button-ul">
                         <li><a class="btn btn-default navbar-btn">VIEW TEXT</a></li>
