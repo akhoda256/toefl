@@ -11,7 +11,15 @@ from .classes import State
 from .models import Option, ReadingQuestion, ListeningQuestion
 from .models import Paragraph
 from .models import Passage
+from .models import Question
 from .models import Conversation
+
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
+from .forms import UploadFileForm
+from .models import SpeakingResponse
+
+# Imaginary function to handle an uploaded file.
 
 userStates = {}
 endTimes = {}
@@ -174,3 +182,22 @@ def listeningQuestion(request):
     return render_to_response('tpo/listen.html', {'tpoNum': tpoNum, 'conversation': conversation, 'imgPath': imgPath,
                                                   'audioPath': audioPath, 'is_pre_img': is_pre_img,
                                                   'is_pre_audio': is_pre_audio})
+
+@csrf_exempt
+def test(request):
+    return render_to_response('tpo/test.html', {})
+
+
+@csrf_exempt
+def salam(request):
+    print "salam"
+    print str(request)
+    if request.method == 'POST':
+        form = UploadFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = SpeakingResponse(respFile=request.FILES['respFile'], user="salam")
+            instance.save()
+            return HttpResponseRedirect('/tpo/test/')
+    else:
+        form = UploadFileForm()
+    return render(request, 'upload.html', {'form': form})
