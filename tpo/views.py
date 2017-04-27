@@ -184,14 +184,14 @@ def listeningQuestion(request):
                                                   'is_pre_audio': is_pre_audio})
 
 @csrf_exempt
-def test(request):
+def speakingQuestion(request):
+    tpoNum = request.GET.get('tpoNumber', None)
+    questionNumber = request.GET.get('questionNumber', None)
     return render_to_response('tpo/test.html', {})
 
 
 @csrf_exempt
 def salam(request):
-    print "salam"
-    print str(request)
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():

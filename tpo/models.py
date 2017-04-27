@@ -98,9 +98,15 @@ class ListeningQuestion(Question):
         return str(self.text)
 
 
+class speakingQuestion(Question):
+    questionAudioFile = models.FileField(upload_to='tpo/static/audio/', null=True)
+    questionDescription = models.FileField(upload_to='tpo/static/audio/', null=True)
+    preparationTime = models.IntegerField(default=1)
+
 class SpeakingResponse(models.Model):
     user = models.CharField(max_length=200)
     respFile = models.FileField(upload_to='tpo/static/audio/')
+
 
     def __str__(self):
         return str(self.user)

@@ -11,6 +11,6 @@ urlpatterns = [
     # url(r'^q/$', views.getQuestion, name='pgetQuestion')
     url(r'^listening/?$', views.listeningAudio, name='conversation'),
     url(r'^listening/question/$', views.listeningQuestion, name='listeningQuestion'),
-    url(r'^test/$', views.test, name='test'),
+    url(r'^speaking/question/$', views.speakingQuestion, name='test'),
     url(r'^salam/$', views.salam, name='salam'),
 ]
