@@ -8,7 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .classes import AnswerHistory
 from .classes import State
-from .models import Option, ReadingQuestion
+from .models import Option, ReadingQuestion, ListeningQuestion
 from .models import Paragraph
 from .models import Passage
 from .models import Conversation
@@ -89,7 +89,7 @@ def getReadingQuestion(request):
         return HttpResponseRedirect(s)
     else:
         endTime = endTimes[session_key]
-    if (request.method == 'GET'):
+    if request.method == 'GET':
         questionNum = request.GET.get('questionNumber', None)
         tpoNum = request.GET.get('tpoNumber', None)
         passageNum = request.GET.get('passageNumber', None)
@@ -110,26 +110,21 @@ def getReadingQuestion(request):
             userStates[key] = userState
 
         endTime = endTimes[key]
-
         userState = userStates[key]
         userState.currentQuestion = questionNum
         userState.history = userState.history + [cAnswer]
         userStates[key] = userState
 
     questionNum = int(questionNum) + 1
-
     passage = Passage.objects.get(tpo__title__exact=tpoNum, passageNumber=passageNum)
-
     if questionNum > passage.questionCount:
         passageNum = int(passageNum) + 1
         s = build_url('tpo:passage', params={'tpoNumber': '1', 'passageNumber': passageNum})
         return HttpResponseRedirect(s)
 
     question = ReadingQuestion.objects.get(questionNumber=questionNum, paragraph__passage__passageNumber=passageNum,
-                                    paragraph__passage__tpo__title=tpoNum)
-
+                                           paragraph__passage__tpo__title=tpoNum)
     options = Option.objects.all().filter(question=question).order_by('number').values('text', 'number')
-
     paragraphs = Paragraph.objects.all().filter(passage__tpo__title__exact=tpoNum)
     paragraphs = paragraphs.filter(passage__passageNumber__exact=passageNum).order_by('orderingNumber')
 
@@ -155,8 +150,27 @@ def listeningAudio(request):
 
 @csrf_exempt
 def listeningQuestion(request):
-    # tpoNum = request.GET.get('tpoNumber', None)
-    # convNum = request.GET.get('convNumber', None)
-    # conversation = Conversation.objects.get(tpo__title__exact=tpoNum, convNumber=convNum)
-    # ind = conversation.imgFile.url.find('/static')
-    return render_to_response('tpo/base.html', {})
+    tpoNum = request.GET.get('tpoNumber', None)
+    convNum = request.GET.get('convNumber', None)
+    questionNumber = request.GET.get('questionNumber', None)
+    conversation = Conversation.objects.get(tpo__title__exact=tpoNum, convNumber=convNum)
+    question = ListeningQuestion.objects.get(questionNumber=questionNumber,
+                                             conversation__convNumber=convNum)
+    imgPath = None
+    is_pre_img = False
+    is_pre_audio = False
+    if question.imgFile.name is not None:
+        ind = question.imgFile.url.find('/static')
+        imgPath = question.imgFile.url[ind:]
+        is_pre_img = True
+
+    audioPath = None
+    if question.questionAudioFile.name is not None:
+        ind = question.questionAudioFile.url.find('/static')
+        audioPath = question.questionAudioFile.url[ind:]
+        if is_pre_img is False:
+            is_pre_audio = True
+
+    return render_to_response('tpo/listen.html', {'tpoNum': tpoNum, 'conversation': conversation, 'imgPath': imgPath,
+                                                  'audioPath': audioPath, 'is_pre_img': is_pre_img,
+                                                  'is_pre_audio': is_pre_audio})

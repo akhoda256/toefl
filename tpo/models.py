@@ -51,8 +51,8 @@ class Question(models.Model):
 
 class ReadingQuestion(Question):
     paragraph = models.ForeignKey(Paragraph, on_delete=models.CASCADE, default=None)
-    startHighlight = models.IntegerField(default=1)
-    endHighlight = models.IntegerField(default=1)
+    startHighlight = models.IntegerField(default=1, null=True)
+    endHighlight = models.IntegerField(default=1, null=True)
 
     def __str__(self):
         return str(self.text)
@@ -90,8 +90,9 @@ class Conversation(models.Model):
 
 class ListeningQuestion(Question):
     conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE, default=None)
-    questionAudioFile = models.FileField(upload_to='tpo/static/audio/')
-    preAudioFile = models.FileField(upload_to='tpo/static/audio/')
+    questionAudioFile = models.FileField(upload_to='tpo/static/audio/', null=True)
+    preAudioFile = models.FileField(upload_to='tpo/static/audio/', null=True)
+    imgFile = models.FileField(upload_to='tpo/static/images/', null=True)
 
     def __str__(self):
         return str(self.text)
