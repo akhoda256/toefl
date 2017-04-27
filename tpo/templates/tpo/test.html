@@ -3,9 +3,12 @@
 
 {% block content %}
     {% load static %}
-    <h1>Recorder.js simple WAV export example</h1>
-
-    <p>Make sure you are using a recent version of Google Chrome.</p>
+    <div style="padding: 120px; font-size: 20px;">
+    <div sytle="border-bottom: solid #000000;">
+        <p>Talk about a book you have read that was important to you for some reason. Explain why the book was important
+            to you. Give specific details and examples to explain your answer.</p>
+    </div>
+    </div>
     <p>Also before you enable microphone input either plug in headphones or turn the volume down if you want to avoid
         ear splitting feedback!</p>
 
@@ -66,7 +69,7 @@
             recorder && recorder.exportWAV(function (blob) {
 
                 var fd = new FormData();
-{#                fd.append('fileName', 'test.wav');#}
+                {#                fd.append('fileName', 'test.wav');#}
                 fd.append('respFile', blob);
                 fd.append('user', 'test')
                 $.ajax({
