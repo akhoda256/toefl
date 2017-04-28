@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.http import QueryDict
 from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
 
 from .classes import AnswerHistory
 from .classes import State
@@ -16,8 +17,9 @@ from .models import Conversation
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-from .forms import UploadFileForm
+from .forms import SpeakingResponseForm
 from .models import SpeakingResponse
+from .models import SpeakingQuestion
 
 # Imaginary function to handle an uploaded file.
 
@@ -183,21 +185,31 @@ def listeningQuestion(request):
                                                   'audioPath': audioPath, 'is_pre_img': is_pre_img,
                                                   'is_pre_audio': is_pre_audio})
 
+
 @csrf_exempt
 def speakingQuestion(request):
     tpoNum = request.GET.get('tpoNumber', None)
-    questionNumber = request.GET.get('questionNumber', None)
-    return render_to_response('tpo/test.html', {})
+    questionNum = request.GET.get('questionNumber', None)
+    question = SpeakingQuestion.objects.get(tpo__title__exact=tpoNum, questionNumber=questionNum)
+    ind = question.questionAudioFile.url.find('/static')
+    questionAudioPath = question.questionAudioFile.url[ind:]
+    return render_to_response('tpo/speaking.html', {'questionNo': questionNum, 'tpoNum': tpoNum, 'question': question,
+                                                    'questionAudioPath': questionAudioPath})
 
 
 @csrf_exempt
 def salam(request):
     if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
+        form = SpeakingResponseForm(request.POST, request.FILES)
         if form.is_valid():
-            instance = SpeakingResponse(respFile=request.FILES['respFile'], user="salam")
+            qNo = request.POST.get('questionNo')
+            tNo = request.POST.get('tpoNo')
+            instance = SpeakingResponse(respFile=request.FILES['respFile'], user=request.POST.get('user'),
+                                        questionNo=qNo, tpoNo=request.POST.get('tpoNo'))
             instance.save()
-            return HttpResponseRedirect('/tpo/test/')
+            return JsonResponse({'status':'success'})
+        else:
+            return JsonResponse({'status': 'error'})
     else:
-        form = UploadFileForm()
+        form = SpeakingResponseForm()
     return render(request, 'upload.html', {'form': form})
