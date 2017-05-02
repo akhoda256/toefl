@@ -1,0 +1,226 @@
+{% extends 'tpo/base.html' %}
+
+
+
+
+{% block content %}
+    {% load static %}
+    <nav class="navbar navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div>
+            <div class="navbar-header" style="text-align: center;">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static "images/logo.png" %}" width="40px">
+                </a>
+            </div>
+            <p class="navbar-text">TPO {{ tpoNum }} Writing </p>
+
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right nav-button-ul">
+                    <li><a class="btn btn-default navbar-btn">VIEW TEXT</a></li>
+                    <li><a class="btn btn-default navbar-btn">HELP</a></li>
+                    <li><a class="btn btn-default navbar-btn">REVIEW</a></li>
+                    <li><a class="btn btn-default navbar-btn">BACK</a></li>
+                    <li>
+
+                        <input type="hidden" name="questionNumber" value="{{ questionNo }}"/>
+                        <input type="hidden" name="tpoNumber" value="{{ tpoNum }}"/>
+                        <input type="hidden" name="passageNumber" value="{{ passage.passageNumber }}"/>
+                        <input type="hidden" name="choice" value="1"/>
+
+                        <button
+                                type="submit" class="btn btn-default navbar-btn" id="nextQuestion">NEXT
+                        </button>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <div class="col-lg-offset-6">
+                <p class="navbar-text">Question {{ questionNo }} of 2</p>
+            </div>
+            <div>
+                <p id="demo" class="navbar-text navbar-right" style="margin-right:30px;"><span
+                        id="show-time-min"></span>:<span id="show-time-sec"></span>
+                </p>
+            </div>
+        </div>
+    </nav>
+    <div>
+        {% if questionNo == '1' %}
+            {% if partNum  == '0' %}
+                <div style="border: 2px solid #000000; padding-bottom: 20px; height: 60px;">
+                </div>
+                <div style="display: flex; padding-bottom: 20px;">
+                    <div class="col-lg-6" style="border: 2px solid #000000;flex: 1;">
+                        <p>{{ readingOfQuestion.text }}</p>
+                    </div>
+                    <div class="col-lg-6" style="border: 2px solid #000000;flex: 1;">
+
+                    </div>
+                </div>
+                </div>
+            {% elif partNum  == '1' %}
+                <div>
+                    <img src="{{ listeningObjImage }}">
+                    <audio id="audioElement" autoplay>
+                        <source src="{{ listeningObjAudio }}" type="audio/mpeg">
+                    </audio>
+                    <div id="myProgress">
+                        <div id="myBar"></div>
+                    </div>
+                </div>
+            {% else %}
+                <div style="border: 2px solid #000000; padding-bottom: 20px; height: 60px;">
+                    <p>
+                        Directions: You have 20 minutes to plan and write your response. Your response will be judged on
+                        the basis of the quality of your writing and on how well your response presents the points in
+                        the lecture and their relationship to the reading passage. Typically, an effective response will
+                        be 150 to 225 words.
+                    </p>
+                </div>
+                <div style="border: 2px solid #000000; padding-bottom: 20px; height: 60px;">
+                    {{ question.text }}
+                </div>
+                <div style="display: flex; padding-bottom: 20px;">
+                    <div class="col-lg-6" style="border: 2px solid #000000;flex: 1;">
+                        <p>{{ readingOfQuestion.text }}</p>
+                    </div>
+                    <div class="col-lg-6" style="border: 2px solid #000000;flex: 1;">
+                        <textarea rows="15" class="writing-textarea col-lg-12" style="padding-left: 10px;">
+                    </textarea>
+                    </div>
+                </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <div style="display: flex; margin-bottom: 15px;">
+                <div class="col-lg-6" style="flex:1;">
+                    <div style="border: 2px solid #000000; margin-bottom: 10px;">
+                        <p>
+                            Directions: Read the question below. You have 30 minutes to plan, write, and revise your
+                            essay. Typically, an effective response will contain a minimum of 300 words.
+                        </p>
+                    </div>
+                    <div style="border: 2px solid #000000; margin-bottom: 10px;">
+                        <p>
+                            {{ question.text }}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-6"
+                     style="flex:1;">
+                    <textarea rows="15" class="writing-textarea col-lg-12" style="padding-left: 10px;">
+
+                    </textarea>
+                </div>
+            </div>
+        {% endif %}
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        {%  if questionNo == '1' %}
+            {% if partNum == '0' %}
+                treading = parseInt({{ readingOfQuestion.readingTime }})
+                var tsec = treading % 60;
+                var tmin = treading / 60;
+                document.getElementById("show-time-sec").innerHTML = tsec.toString();
+                document.getElementById("show-time-min").innerHTML = tmin.toString();
+
+                var myVar = setInterval(myTimer, 1000);
+                function myTimer() {
+                    if (tsec == 0) {
+                        if (tmin == 0) {
+                            clearInterval(myVar);
+                            top.location.href = "/tpo/writing/question/?tpoNumber={{ tpoNum }}&questionNumber={{ questionNo }}&partNumber={{ nextPart }}";
+                        }
+                        else {
+                            tmin--;
+                            tsec = 59;
+                        }
+                    }
+                    else {
+                        tsec--;
+                        document.getElementById("show-time-sec").innerHTML = tsec.toString();
+                        document.getElementById("show-time-min").innerHTML = tmin.toString();
+                    }
+                }
+            {% elif partNum == '1' %}
+                var elem = document.getElementById("myBar");
+                var aud = document.getElementById("audioElement");
+                var progressTime = 1;
+                elem.style.width = 0 + '%';
+                var intervalId = setInterval(myTimer, 10 * aud.duration);
+                function myTimer() {
+                    progressTime++;
+                    if (progressTime >= 100) {
+                        clearInterval(intervalId);
+                        top.location.href = "/tpo/writing/question/?tpoNumber={{ tpoNum }}&questionNumber={{ questionNo }}&partNumber={{ nextPart }}";
+                    }
+                    else {
+                        elem.style.width = progressTime + '%';
+                    }
+                }
+
+                $(".progress-bar").animate({
+                    width: "100%"
+                }, aud.duration * 1000
+                )
+                ;
+            {% else %}
+                treading = parseInt({{ question.responseTime }})
+                var tsec = treading % 60;
+                var tmin = treading / 60;
+                document.getElementById("show-time-sec").innerHTML = tsec.toString();
+                document.getElementById("show-time-min").innerHTML = tmin.toString();
+
+                var myVar = setInterval(myTimer, 1000);
+                function myTimer() {
+                    if (tsec == 0) {
+                        if (tmin == 0) {
+                            clearInterval(myVar);
+                            top.location.href = "/tpo/writing/question/?tpoNumber={{ tpoNum }}&questionNumber={{ questionNo }}&partNumber={{ nextPart }}";
+                        }
+                        else {
+                            tmin--;
+                            tsec = 59;
+                        }
+                    }
+                    else {
+                        tsec--;
+                        document.getElementById("show-time-sec").innerHTML = tsec.toString();
+                        document.getElementById("show-time-min").innerHTML = tmin.toString();
+                    }
+                }
+
+            {% endif %}
+        {% else %}
+            treading = parseInt({{ question.responseTime }})
+            var tsec = treading % 60;
+            var tmin = treading / 60;
+            document.getElementById("show-time-sec").innerHTML = tsec.toString();
+            document.getElementById("show-time-min").innerHTML = tmin.toString();
+
+            var myVar = setInterval(myTimer, 1000);
+            function myTimer() {
+                if (tsec == 0) {
+                    if (tmin == 0) {
+                        clearInterval(myVar);
+                        top.location.href = "/tpo/writing/question/?tpoNumber={{ tpoNum }}&questionNumber={{ questionNo }}&partNumber={{ nextPart }}";
+                    }
+                    else {
+                        tmin--;
+                        tsec = 59;
+                    }
+                }
+                else {
+                    tsec--;
+                    document.getElementById("show-time-sec").innerHTML = tsec.toString();
+                    document.getElementById("show-time-min").innerHTML = tmin.toString();
+                }
+            }
+        {% endif %}
+    </script>
+{% endblock %}

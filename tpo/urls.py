@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^listening/?$', views.listeningAudio, name='conversation'),
     url(r'^listening/question/$', views.listeningQuestion, name='listeningQuestion'),
     url(r'^speaking/question/$', views.speakingQuestion, name='speakingQuestion'),
-    url(r'^salam/$', views.salam, name='salam'),
+    url(r'^speakingResponse/$', views.speakingResponse, name='speakingResponse'),
+    url(r'^writing/question/$', views.writingQuestion, name='writingQuestion')
 ]

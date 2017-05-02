@@ -38,201 +38,273 @@
         </div>
         <div>
             <div class="col-lg-offset-6">
-                <p class="navbar-text">Passage {{ questionNo }} of 6</p>
+                <p class="navbar-text">Question {{ questionNo }} of 6</p>
             </div>
             <div>
                 <p id="demo" class="navbar-text navbar-right" style="margin-right:30px;">60m 00s</p>
-                <div>
-                    <audio id="audioElement" autoplay>
-                        <source src="{{ questionAudioPath }}" type="audio/mpeg">
-                    </audio>
-                </div>
             </div>
         </div>
     </nav>
-    <div style="padding: 10px 150px; font-size: 20px;">
-        <div style="border-bottom: 2px solid #000000; padding-bottom: 20px;">
-            <p>{{ question.text }}</p>
+
+    {% if partNum  == '0' %}
+        <div>
+            <img src="">
+            <audio id="audioElement" autoplay>
+                <source src="{{ descAudioPath }}" type="audio/mpeg">
+            </audio>
         </div>
-        <div style="padding-top: 20px;">
-            <table style="border: 1px solid black;">
-                <tr>
-                    <th style="width:20%;font-size:16px;text-align:center;">
-                        <span id="tableTitle"> Prepare your response </span>
-                    </th>
-                </tr>
-                <tr>
-                    <td style="text-align:left;">00:30</td>
-                </tr>
-                <tr>
-                    <td style="text-align:left;">
-                        <div id="myProgress">
-                            <div id="myBar"></div>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+    {% elif partNum  == '1' %}
+        <div>
+            <div>
+                <p>
+                    Reading time:
+                    <span id="readingTimer">00:{{ readingObj.readingTime }}
+                            </span>
+                    seconds
+                </p>
+            </div>
+            <div>
+                <div>
+                    <p>{{ readingObj.title }}</p>
+                </div>
+                <div>
+                    <p>{{ readingObj.text }}</p>
+                </div>
+            </div>
         </div>
-    </div>
-    <p>Also before you enable microphone input either plug in headphones or turn the volume down if you want to avoid
-        ear splitting feedback!</p>
-
-    <button onclick="startRecording(this);">record</button>
-    <button onclick="stopRecording(this);" disabled>stop</button>
-
-    <h2>Recordings</h2>
-    <ul id="recordingslist"></ul>
-
-    <h2>Log</h2>
-    <pre id="log"></pre>
-
-    <form name="uploadAudio" method="post" enctype="multipart/form-data" action="/tpo/salam/">
-        <input id="user" name="user" type="hidden" value="salam">
-        <input id="responseAudioFile" name="respFile" type="file">
-        <button id="button-id" class="btn btn-danger">click</button>
-    </form>
-
-
+    {% elif partNum  == '2' %}
+        <div>
+            <img src="{{ listeningObjImage }}">
+            <audio id="audioElement" autoplay>
+                <source src="{{ listeningObjAudio }}" type="audio/mpeg">
+            </audio>
+            <div id="myProgress">
+                <div id="myBar"></div>
+            </div>
+        </div>
+    {% else %}
+        <div>
+            <audio id="audioElement" autoplay>
+                <source src="{{ questionAudioPath }}" type="audio/mpeg">
+            </audio>
+        </div>
+        <div style="padding: 10px 150px; font-size: 20px;">
+            <div style="border-bottom: 2px solid #000000; padding-bottom: 20px;">
+                <p>{{ question.text }}</p>
+            </div>
+            <div style="padding-top: 20px;">
+                <table style="border: 1px solid black;">
+                    <tr>
+                        <th style="width:20%;font-size:16px;text-align:center;">
+                            <span id="tableTitle"> Prepare your response </span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;">00:30</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:left;">
+                            <div id="myProgress">
+                                <div id="myBar"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block javascript %}
-    <script>
-        var preprationProgressTime = 1;
-        var elem = document.getElementById("myBar");
-
-        $("#audioElement").bind('ended', function () {
-            // done playing
-            //alert("Player stopped");
-            preprationStep()
-        });
-        function preprationStep() {
-            var myVar = setInterval(myTimer,  1000);
+    {% if partNum  == '0' %}
+        <script>
+            $("#audioElement").bind('ended', function () {
+                // done playing
+                //alert("Player stopped");
+                top.location.href = "/tpo/speaking/question/?tpoNumber={{ tpoNum }}&questionNumber={{ questionNo }}&partNumber={{ nextPart }}";
+            });
+        </script>
+    {% elif partNum == '1' %}
+        <script>
+            var remainTime = parseInt({{ readingObj.readingTime }})
+            var myVar = setInterval(myTimer, 1000);
 
             function myTimer() {
-                preprationProgressTime++;
-                if (preprationProgressTime > {{ question.preparationTime }}) {
-                    console.log(preprationProgressTime);
+                remainTime--;
+                if (remainTime < 1) {
                     clearInterval(myVar);
-                    recordingStep()
+                    top.location.href = "/tpo/speaking/question/?tpoNumber={{ tpoNum }}&questionNumber={{ questionNo }}&partNumber={{ nextPart }}";
                 }
                 else {
-                    elem.style.width = 3.3* preprationProgressTime + '%';
+                    document.getElementById("readingTimer").innerHTML = "00:" + remainTime.toString();
                 }
             }
-
-            $(".progress-bar").animate({
-                width: "100%"
-            }, {{ question.preparationTime }} * 3300);
-        }
-
-        function recordingStep() {
-            var preprationProgressTime = 1;
+        </script>
+    {% elif partNum == '2' %}
+        <script>
+            var elem = document.getElementById("myBar");
+            var aud = document.getElementById("audioElement");
+            var progressTime = 1;
             elem.style.width = 0 + '%';
-            document.getElementById("tableTitle").innerHTML="Recording";
-            var myVar = setInterval(myTimer,  1000);
-            startRecording()
-
+            var intervalId = setInterval(myTimer, 10 * aud.duration);
             function myTimer() {
-                preprationProgressTime++;
-                if (preprationProgressTime > {{ question.responseTime }}) {
-                    console.log(preprationProgressTime);
-                    clearInterval(myVar);
-                    stopRecording();
+                progressTime++;
+                if (progressTime >= 100) {
+                    clearInterval(intervalId);
+                    top.location.href = "/tpo/speaking/question/?tpoNumber={{ tpoNum }}&questionNumber={{ questionNo }}&partNumber={{ nextPart }}";
                 }
                 else {
-                    elem.style.width = 1.65* preprationProgressTime + '%';
+                    elem.style.width = progressTime + '%';
                 }
             }
 
             $(".progress-bar").animate({
                 width: "100%"
-            }, {{ question.responseTime }} * 3300);
-        }
-    </script>
-    <script>
-        //document.uploadAudio.submit();
-        function __log(e, data) {
-            log.innerHTML += "\n" + e + " " + (data || '');
-        }
-        var audio_context;
-        var recorder;
-        function startUserMedia(stream) {
-            var input = audio_context.createMediaStreamSource(stream);
-            __log('Media stream created.');
-            // Uncomment if you want the audio to feedback directly
-            //input.connect(audio_context.destination);
-            //__log('Input connected to audio context destination.');
+            }, aud.duration * 1000
+            )
+            ;
 
-            recorder = new Recorder(input);
-            __log('Recorder initialised.');
-        }
-        function startRecording() {
-            recorder && recorder.record();
-            __log('Recording...');
-        }
-        function stopRecording() {
-            recorder && recorder.stop();
-            __log('Stopped recording.');
+        </script>
+    {% else %}
+        <script>
+            var preprationProgressTime = 1;
+            var elem = document.getElementById("myBar");
 
-            // create WAV download link using audio data blob
-            createDownloadLink();
-
-            recorder.clear();
-        }
-        function createDownloadLink() {
-            recorder && recorder.exportWAV(function (blob) {
-
-                var fd = new FormData();
-                {#                fd.append('fileName', 'test.wav');#}
-                fd.append('respFile', blob);
-                fd.append('user', 'test');
-                fd.append('tpoNo', {{ tpoNum }});
-                fd.append('questionNo', {{ questionNo }})
-                $.ajax({
-                    type: 'POST',
-                    url: '/tpo/salam/',
-                    data: fd,
-                    processData: false,
-                    contentType: false
-                }).done(function (data) {
-                    console.log(data);
-                    if (data.status == 'success') {
-                        top.location.href="/tpo/speaking/question/?tpoNumber=1&questionNumber=2";//redirection
-                    }
-                });
-
+            $("#audioElement").bind('ended', function () {
+                // done playing
+                //alert("Player stopped");
+                preprationStep()
             });
-        }
-        window.onload = function init() {
-            try {
-                // webkit shim
-                window.AudioContext = window.AudioContext || window.webkitAudioContext;
-                navigator.getUserMedia = ( navigator.getUserMedia ||
-                navigator.webkitGetUserMedia ||
-                navigator.mozGetUserMedia ||
-                navigator.msGetUserMedia);
-                window.URL = window.URL || window.webkitURL;
+            function preprationStep() {
+                var myVar = setInterval(myTimer, 1000);
 
-                audio_context = new AudioContext;
-                __log('Audio context set up.');
-                __log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
-            } catch (e) {
-                alert('No web audio support in this browser!');
+                function myTimer() {
+                    preprationProgressTime++;
+                    if (preprationProgressTime > {{ question.preparationTime }}) {
+                        console.log(preprationProgressTime);
+                        clearInterval(myVar);
+                        recordingStep()
+                    }
+                    else {
+                        elem.style.width = 3.3 * preprationProgressTime + '%';
+                    }
+                }
+
+                $(".progress-bar").animate({
+                    width: "100%"
+                }, {{ question.preparationTime }} * 3300
+            )
+                ;
             }
 
-            navigator.getUserMedia({audio: true}, startUserMedia, function (e) {
-                __log('No live audio input: ' + e);
-            });
-        };
-    </script>
-    <script src="{% static  "js/recorder.js" %}"></script>
-    <script>
-        var elem = document.getElementById("myBar");
-        var width = 1;
-        //var aud = document.getElementById("audioElement");
-        //var intervalId = setInterval(frame, 10 * aud.duration);
+            function recordingStep() {
+                var preprationProgressTime = 1;
+                elem.style.width = 0 + '%';
+                document.getElementById("tableTitle").innerHTML = "Recording";
+                var myVar = setInterval(myTimer, 1000);
+                startRecording()
+
+                function myTimer() {
+                    preprationProgressTime++;
+                    if (preprationProgressTime > {{ question.responseTime }}) {
+                        console.log(preprationProgressTime);
+                        clearInterval(myVar);
+                        stopRecording();
+                    }
+                    else {
+                        elem.style.width = 1.65 * preprationProgressTime + '%';
+                    }
+                }
+
+                $(".progress-bar").animate({
+                    width: "100%"
+                }, {{ question.responseTime }} * 3300
+            )
+                ;
+            }
+        </script>
+        <script>
+            var audio_context;
+            var recorder;
+            function startUserMedia(stream) {
+                var input = audio_context.createMediaStreamSource(stream);
+                console.log('Media stream created.');
+                // Uncomment if you want the audio to feedback directly
+                //input.connect(audio_context.destination);
+                //__log('Input connected to audio context destination.');
+
+                recorder = new Recorder(input);
+                console.log('Recorder initialised.');
+            }
+            function startRecording() {
+                recorder && recorder.record();
+                console.log('Recording...');
+            }
+            function stopRecording() {
+                recorder && recorder.stop();
+                console.log('Stopped recording.');
+
+                // create WAV download link using audio data blob
+                createDownloadLink();
+
+                recorder.clear();
+            }
+            function createDownloadLink() {
+                recorder && recorder.exportWAV(function (blob) {
+
+                    var fd = new FormData();
+                    {#                fd.append('fileName', 'test.wav');#}
+                    fd.append('respFile', blob);
+                    fd.append('user', 'test');
+                    fd.append('tpoNo', {{ tpoNum }});
+                    fd.append('questionNo', {{ questionNo }})
+                    $.ajax({
+                        type: 'POST',
+                        url: '/tpo/speakingResponse/',
+                        data: fd,
+                        processData: false,
+                        contentType: false
+                    }).done(function (data) {
+                        console.log(data);
+                        if (data.status == 'success') {
+                            var qNo = parseInt({{ questionNo }}) + 1
+                            top.location.href = "/tpo/speaking/question/?tpoNumber={{ tpoNum }}&questionNumber=" + qNo.toString() + "&partNumber=0";//redirection
+                        }
+                    });
+
+                });
+            }
+            window.onload = function init() {
+                try {
+                    // webkit shim
+                    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+                    navigator.getUserMedia = ( navigator.getUserMedia ||
+                    navigator.webkitGetUserMedia ||
+                    navigator.mozGetUserMedia ||
+                    navigator.msGetUserMedia);
+                    window.URL = window.URL || window.webkitURL;
+
+                    audio_context = new AudioContext;
+                    console.log('Audio context set up.');
+                    console.log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+                } catch (e) {
+                    alert('No web audio support in this browser!');
+                }
+
+                navigator.getUserMedia({audio: true}, startUserMedia, function (e) {
+                    console.log('No live audio input: ' + e);
+                });
+            };
+        </script>
+        <script src="{% static  "js/recorder.js" %}"></script>
+        <script>
+            var elem = document.getElementById("myBar");
+            var width = 1;
+            //var aud = document.getElementById("audioElement");
+            //var intervalId = setInterval(frame, 10 * aud.duration);
 
 
-        //}, aud.duration * 1000);
-    </script>
+            //}, aud.duration * 1000);
+        </script>
+    {% endif %}
 {% endblock %}

@@ -105,17 +105,21 @@ class SpeakingQuestion(Question):
     responseTime = models.IntegerField(default=1)
     tpo = models.ForeignKey(TPO, on_delete=models.CASCADE, default=None)
 
-class ReadingPartOfSpeakingQuestion(models.Model):
+class ReadingPartOfQuestion(models.Model):
     text = models.CharField(max_length=500)
     readingTime = models.IntegerField(default=45)
+
+class ReadingPartOfSpeakingQuestion(ReadingPartOfQuestion):
     title = models.CharField(max_length=100)
     sQuestion = models.ForeignKey(SpeakingQuestion, on_delete=models.CASCADE, default=None)
     def __str__(self):
         return str(self.title)
 
-class ListeningPartOfSpeakingQuestion(models.Model):
+class ListeningPartOfQuestion(models.Model):
     imgFile = models.FileField(upload_to='tpo/static/images/', null=True)
-    AudioFile = models.FileField(upload_to='tpo/static/audio/', null=True)
+    audioFile = models.FileField(upload_to='tpo/static/audio/', null=True)
+
+class ListeningPartOfSpeakingQuestion(ListeningPartOfQuestion):
     sQuestion = models.ForeignKey(SpeakingQuestion, on_delete=models.CASCADE, default=None)
     def __str__(self):
         return str(self.imgFile.name)
@@ -129,3 +133,18 @@ class SpeakingResponse(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+
+class WritingQuestion(Question):
+    responseTime = models.IntegerField(default=1)
+    tpo = models.ForeignKey(TPO, on_delete=models.CASCADE, default=None)
+
+class ListeningPartOfWritingQuestion(ListeningPartOfQuestion):
+    wQuestion = models.ForeignKey(WritingQuestion, on_delete=models.CASCADE, default=None)
+    def __str__(self):
+        return str(self.imgFile.name)
+
+class ReadingPartOfWritingQuestion(ReadingPartOfQuestion):
+    wQuestion = models.ForeignKey(WritingQuestion, on_delete=models.CASCADE, default=None)
+    def __str__(self):
+        return str(self.text)

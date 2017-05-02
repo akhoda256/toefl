@@ -20,6 +20,12 @@ from django.shortcuts import render
 from .forms import SpeakingResponseForm
 from .models import SpeakingResponse
 from .models import SpeakingQuestion
+from .models import ReadingPartOfSpeakingQuestion
+from .models import ListeningPartOfSpeakingQuestion
+
+from .models import WritingQuestion
+from .models import ReadingPartOfWritingQuestion
+from .models import ListeningPartOfWritingQuestion
 
 # Imaginary function to handle an uploaded file.
 
@@ -190,15 +196,45 @@ def listeningQuestion(request):
 def speakingQuestion(request):
     tpoNum = request.GET.get('tpoNumber', None)
     questionNum = request.GET.get('questionNumber', None)
+    partNum = request.GET.get('partNumber', None)
     question = SpeakingQuestion.objects.get(tpo__title__exact=tpoNum, questionNumber=questionNum)
-    ind = question.questionAudioFile.url.find('/static')
-    questionAudioPath = question.questionAudioFile.url[ind:]
-    return render_to_response('tpo/speaking.html', {'questionNo': questionNum, 'tpoNum': tpoNum, 'question': question,
-                                                    'questionAudioPath': questionAudioPath})
+    nextPart = int(partNum) + 1
+    if questionNum in ['0', '1']:
+        nextPart = '3'
+    elif questionNum in ['3', '4']:
+        if nextPart == 1:
+            nextPart = '2'
+    if partNum == '0':
+        ind = question.questionDescription.url.find('/static')
+        descAudioPath = question.questionDescription.url[ind:]
+        return render_to_response('tpo/speaking.html',
+                                  {'questionNo': questionNum, 'tpoNum': tpoNum,
+                                   'descAudioPath': descAudioPath, 'partNum': partNum, 'nextPart': nextPart})
+    elif partNum == '1':
+        readingOfQuestion = ReadingPartOfSpeakingQuestion.objects.get(sQuestion__pk=question.pk)
+        return render_to_response('tpo/speaking.html',
+                                  {'questionNo': questionNum, 'tpoNum': tpoNum, 'question': question,
+                                   'readingObj': readingOfQuestion, 'partNum': partNum, 'nextPart': nextPart})
+    elif partNum == '2':
+        listeningOfQuestion = ListeningPartOfSpeakingQuestion.objects.get(sQuestion__pk=question.pk)
+        ind = listeningOfQuestion.imgFile.url.find('/static')
+        listeningObjImage = listeningOfQuestion.imgFile.url[ind:]
+        ind = listeningOfQuestion.audioFile.url.find('/static')
+        listeningObjAudio = listeningOfQuestion.audioFile.url[ind:]
+        return render_to_response('tpo/speaking.html',
+                                  {'questionNo': questionNum, 'tpoNum': tpoNum, 'question': question,
+                                   'listeningObjImage': listeningObjImage, 'listeningObjAudio': listeningObjAudio,
+                                   'partNum': partNum, 'nextPart': nextPart})
+    else:
+        ind = question.questionAudioFile.url.find('/static')
+        questionAudioPath = question.questionAudioFile.url[ind:]
+        return render_to_response('tpo/speaking.html',
+                                  {'questionNo': questionNum, 'tpoNum': tpoNum, 'question': question,
+                                   'questionAudioPath': questionAudioPath, 'nextPart': nextPart})
 
 
 @csrf_exempt
-def salam(request):
+def speakingResponse(request):
     if request.method == 'POST':
         form = SpeakingResponseForm(request.POST, request.FILES)
         if form.is_valid():
@@ -207,9 +243,45 @@ def salam(request):
             instance = SpeakingResponse(respFile=request.FILES['respFile'], user=request.POST.get('user'),
                                         questionNo=qNo, tpoNo=request.POST.get('tpoNo'))
             instance.save()
-            return JsonResponse({'status':'success'})
+            return JsonResponse({'status': 'success'})
         else:
             return JsonResponse({'status': 'error'})
     else:
         form = SpeakingResponseForm()
     return render(request, 'upload.html', {'form': form})
+
+
+@csrf_exempt
+def writingQuestion(request):
+    tpoNum = request.GET.get('tpoNumber', None)
+    questionNum = request.GET.get('questionNumber', None)
+    partNum = request.GET.get('partNumber', None)
+    question = WritingQuestion.objects.get(tpo__title__exact=tpoNum, questionNumber=questionNum)
+    nextPart = int(partNum) + 1
+    if questionNum == '1':
+        if partNum == '0':
+            readingOfQuestion = ReadingPartOfWritingQuestion.objects.get(wQuestion__pk=question.pk)
+            return render_to_response('tpo/writing.html',
+                                      {'questionNo': questionNum, 'tpoNum': tpoNum, 'question': question,
+                                       'nextPart': nextPart, 'readingOfQuestion': readingOfQuestion,
+                                       'partNum': partNum})
+        elif partNum == '1':
+            listeningOfQuestion = ListeningPartOfWritingQuestion.objects.get(wQuestion__pk=question.pk)
+            ind = listeningOfQuestion.imgFile.url.find('/static')
+            listeningObjImage = listeningOfQuestion.imgFile.url[ind:]
+            ind = listeningOfQuestion.audioFile.url.find('/static')
+            listeningObjAudio = listeningOfQuestion.audioFile.url[ind:]
+            return render_to_response('tpo/writing.html',
+                                      {'questionNo': questionNum, 'tpoNum': tpoNum, 'question': question,
+                                       'listeningObjImage': listeningObjImage, 'listeningObjAudio': listeningObjAudio,
+                                       'partNum': partNum, 'nextPart': nextPart})
+        else:
+            readingOfQuestion = ReadingPartOfWritingQuestion.objects.get(wQuestion__pk=question.pk)
+            return render_to_response('tpo/writing.html',
+                                      {'questionNo': questionNum, 'tpoNum': tpoNum, 'question': question,
+                                       'partNum': partNum, 'nextPart': nextPart,
+                                       'readingOfQuestion': readingOfQuestion})
+    else:
+        return render_to_response('tpo/writing.html',
+                                  {'questionNo': questionNum, 'tpoNum': tpoNum, 'question': question,
+                                   'nextPart': nextPart, 'partNum': partNum})
