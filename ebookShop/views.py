@@ -10,6 +10,8 @@ def index(request):
 
 @csrf_exempt
 def book(request):
-
-    return render_to_response('ebookShop/book.html', {})
+    myBook = Book.objects.first()
+    suggestionList = Book.objects.all()
+    return render_to_response('ebookShop/book.html',
+                              {'book': myBook, 'suggestions': suggestionList})
 
