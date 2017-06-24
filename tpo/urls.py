@@ -13,5 +13,6 @@ urlpatterns = [
     url(r'^listening/question/$', views.listeningQuestion, name='listeningQuestion'),
     url(r'^speaking/question/$', views.speakingQuestion, name='speakingQuestion'),
     url(r'^speakingResponse/$', views.speakingResponse, name='speakingResponse'),
+    url(r'^writingResponse/$', views.writingResponse, name='writingResponse'),
     url(r'^writing/question/$', views.writingQuestion, name='writingQuestion')
 ]

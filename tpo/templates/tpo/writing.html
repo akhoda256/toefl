@@ -88,7 +88,7 @@
                         <p>{{ readingOfQuestion.text }}</p>
                     </div>
                     <div class="col-lg-6" style="border: 2px solid #000000;flex: 1;">
-                        <textarea rows="15" class="writing-textarea col-lg-12" style="padding-left: 10px;">
+                        <textarea id="respTextBox" rows="15" class="writing-textarea col-lg-12" style="padding-left: 10px;">
                     </textarea>
                     </div>
                 </div>
@@ -111,7 +111,7 @@
                 </div>
                 <div class="col-lg-6"
                      style="flex:1;">
-                    <textarea rows="15" class="writing-textarea col-lg-12" style="padding-left: 10px;">
+                    <textarea id="respTextBox" rows="15" class="writing-textarea col-lg-12" style="padding-left: 10px;">
 
                     </textarea>
                 </div>
@@ -125,7 +125,7 @@
             {% if partNum == '0' %}
                 treading = parseInt({{ readingOfQuestion.readingTime }})
                 var tsec = treading % 60;
-                var tmin = treading / 60;
+                var tmin = Math.floor(treading / 60);
                 document.getElementById("show-time-sec").innerHTML = tsec.toString();
                 document.getElementById("show-time-min").innerHTML = tmin.toString();
 
@@ -172,7 +172,7 @@
             {% else %}
                 treading = parseInt({{ question.responseTime }})
                 var tsec = treading % 60;
-                var tmin = treading / 60;
+                var tmin = Math.floor(treading / 60);
                 document.getElementById("show-time-sec").innerHTML = tsec.toString();
                 document.getElementById("show-time-min").innerHTML = tmin.toString();
 
@@ -181,7 +181,8 @@
                     if (tsec == 0) {
                         if (tmin == 0) {
                             clearInterval(myVar);
-                            top.location.href = "/tpo/writing/question/?tpoNumber={{ tpoNum }}&questionNumber={{ questionNo }}&partNumber={{ nextPart }}";
+                            sendResponse();
+                            //top.location.href = "/tpo/writing/question/?tpoNumber={{ tpoNum }}&questionNumber={{ questionNo }}&partNumber={{ nextPart }}";
                         }
                         else {
                             tmin--;
@@ -199,7 +200,7 @@
         {% else %}
             treading = parseInt({{ question.responseTime }})
             var tsec = treading % 60;
-            var tmin = treading / 60;
+            var tmin = Math.floor(treading / 60);
             document.getElementById("show-time-sec").innerHTML = tsec.toString();
             document.getElementById("show-time-min").innerHTML = tmin.toString();
 
@@ -208,7 +209,8 @@
                 if (tsec == 0) {
                     if (tmin == 0) {
                         clearInterval(myVar);
-                        top.location.href = "/tpo/writing/question/?tpoNumber={{ tpoNum }}&questionNumber={{ questionNo }}&partNumber={{ nextPart }}";
+                        sendResponse();
+                        //top.location.href = "/tpo/writing/question/?tpoNumber={{ tpoNum }}&questionNumber={{ questionNo }}&partNumber={{ nextPart }}";
                     }
                     else {
                         tmin--;
@@ -222,5 +224,30 @@
                 }
             }
         {% endif %}
+
+        function sendResponse() {
+            console.log('send response');
+            var fd = new FormData();
+            {#                fd.append('fileName', 'test.wav');#}
+            respText = document.getElementById("respTextBox").value + '.';
+            fd.append('respText', respText);
+            fd.append('user', 'test');
+            fd.append('tpoNo', {{ tpoNum }});
+            fd.append('questionNo', {{ questionNo }})
+            $.ajax({
+                type: 'POST',
+                url: '/tpo/writingResponse/',
+                data: fd,
+                processData: false,
+                contentType: false
+            }).done(function (data) {
+                console.log(data);
+                if (data.status == 'success') {
+                    var qNo = parseInt({{ questionNo }}) + 1
+                    top.location.href = "/tpo/writing/question/?tpoNumber={{ tpoNum }}&questionNumber=" + qNo.toString() + "&partNumber=0";//redirection
+                }
+            });
+
+        }
     </script>
 {% endblock %}

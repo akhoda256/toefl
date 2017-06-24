@@ -1,7 +1,6 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 from toefl.settings import MEDIA_URL
-
 
 class Category(models.Model):
     name = models.TextField(max_length=50)
@@ -53,3 +52,22 @@ class Book(models.Model):
     @property
     def get_absolute_image_url(self):
         return self.coverPhoto.url
+
+class BasketItem(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, default=None)
+    csrfToken = models.CharField(max_length=200, default=None)
+
+class Factor(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    totalCost = models.IntegerField(default=0)
+    date = models.DateTimeField(auto_now=True, blank=True)
+    def __str__(self):
+        return str(self.user)
+
+class BookFactorDetails(models.Model):
+    factor = models.ForeignKey(Factor, on_delete=models.CASCADE, default=None)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, default=None)
+    price = models.IntegerField(default=0)
+    def __str__(self):
+        return str(self.book)

@@ -15,6 +15,7 @@ from .models import ListeningPartOfSpeakingQuestion
 from .models import WritingQuestion
 from .models import ReadingPartOfWritingQuestion
 from .models import ListeningPartOfWritingQuestion
+from .models import WritingResponse
 # Register your models here.
 admin.site.register(TPO)
 admin.site.register(Passage)
@@ -33,5 +34,6 @@ admin.site.register(ListeningPartOfSpeakingQuestion)
 admin.site.register(WritingQuestion)
 admin.site.register(ReadingPartOfWritingQuestion)
 admin.site.register(ListeningPartOfWritingQuestion)
+admin.site.register(WritingResponse)
 # Register your models here.
 

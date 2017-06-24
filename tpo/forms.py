@@ -7,5 +7,9 @@ class SpeakingResponseForm(forms.Form):
     tpoNo = forms.IntegerField()
     questionNo = forms.IntegerField()
 
-
+class WritingResponseForm(forms.Form):
+    respText = forms.CharField(max_length=1000)
+    user = forms.CharField(max_length=200)
+    tpoNo = forms.IntegerField()
+    questionNo = forms.IntegerField()
 

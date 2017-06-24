@@ -26,7 +26,8 @@ from .models import ListeningPartOfSpeakingQuestion
 from .models import WritingQuestion
 from .models import ReadingPartOfWritingQuestion
 from .models import ListeningPartOfWritingQuestion
-
+from .forms import WritingResponseForm
+from .models import WritingResponse
 # Imaginary function to handle an uploaded file.
 
 userStates = {}
@@ -285,3 +286,21 @@ def writingQuestion(request):
         return render_to_response('tpo/writing.html',
                                   {'questionNo': questionNum, 'tpoNum': tpoNum, 'question': question,
                                    'nextPart': nextPart, 'partNum': partNum})
+
+
+@csrf_exempt
+def writingResponse(request):
+    if request.method == 'POST':
+        form = WritingResponseForm(request.POST)
+        if form.is_valid():
+            qNo = request.POST.get('questionNo')
+            tNo = request.POST.get('tpoNo')
+            instance = WritingResponse(respText=request.POST.get('respText'), user=request.POST.get('user'),
+                                        questionNo=qNo, tpoNo=request.POST.get('tpoNo'))
+            instance.save()
+            return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error'})
+    else:
+        form = SpeakingResponseForm()
+    return render(request, 'upload.html', {'form': form})

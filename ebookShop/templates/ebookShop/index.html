@@ -1,0 +1,39 @@
+{% extends 'tpo/base.html' %}
+
+
+{% block content %}
+    <div>
+        <form id="addToBasket" action="" onsubmit="addToBasket()">
+            <button>
+                افزودن به سبد
+            </button>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+
+        $("#addToBasket").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "/shop/addBasket/",
+                data: {
+                    'userId': 1,
+                    'bookId': 1
+                }
+            }).done(function (data) {
+                console.log(data);
+                if (data.status == 'success') {
+                    alert('success');
+                }
+                else {
+                    alert("This book has recently added to your basket.");
+                }
+            });
+            return false;
+        });
+    </script>
+{% endblock %}
