@@ -11,7 +11,7 @@ from django.http import JsonResponse
 @csrf_exempt
 def index(request):
     cats = Category.objects.all()
-
+    #return render_to_response('ebookShop/user-orders.html', {})
     return render_to_response('ebookShop/home.html', {})
  #return render_to_response('ebookShop/index.html', {})
 
@@ -39,11 +39,32 @@ def addBasket(request):
         userId = request.POST.get('userId', None)
         bookId = request.POST.get('bookId', None)
         csrfToken = request.META.get('CSRF_COOKIE', None)
-        obj = BasketItem.objects.get(user_id=userId, book_id=bookId)
-        if obj == None:
+        obj = BasketItem.objects.filter(user_id=userId, book_id=bookId)
+        if not obj.exists():
             basketItem = BasketItem(user_id=userId, book_id = bookId, csrfToken=csrfToken)
             basketItem.save()
             resp['status'] = 'success'
         else:
             resp['status'] = 'error'
     return JsonResponse(resp)
+
+@csrf_exempt
+def removeBasket(request):
+    resp = {'status' : ''}
+    if request.method == 'GET':
+        resp['status'] = 'failed'
+    elif request.method == 'POST':
+        basketItemId = request.POST.get('basketItemId', None)
+        obj = BasketItem.objects.filter(id=basketItemId)
+        if not obj.exists():
+            resp['status'] = 'error'
+        else:
+            obj.delete()
+            resp['status'] = 'success'
+    return JsonResponse(resp)
+
+@csrf_exempt
+def showBasket(request):
+    csrfToken = request.META.get('CSRF_COOKIE', None)
+    basketItems = BasketItem.objects.filter(csrfToken=csrfToken)
+    return render_to_response('ebookShop/basket.html', {'basketItems': basketItems})

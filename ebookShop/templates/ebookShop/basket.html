@@ -1,0 +1,88 @@
+{% extends 'tpo/base.html' %}
+
+
+{% block content %}
+
+    <h2>Your Shopping Basket</h2>
+    <table class="table">
+        <thead>
+        <tr style="background-color: #f2f5f7;">
+            <th>Index</th>
+            <th>Book</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for basketItem in basketItems %}
+            <tr>
+                <th class="col-sm-1" scope="row"
+                    style="vertical-align: middle; text-align: center;">{{ forloop.counter }}</th>
+                <td class="col-sm-7">
+                    <div class="col-sm-offset-1 col-sm-4" style="display: inline-block;">
+                        <a href="/book/{{ basketItem.book.id }}">
+                            <img src="{{ basketItem.book.coverPhoto.url }}"
+                                 alt="">
+                        </a>
+                    </div>
+                    <div class="col-sm-6" style="display: inline-block;">
+                        <div>
+                            <h4>{{ basketItem.book.title }}</h4>
+                        </div>
+                        <div>
+                            <p>{{ basketItem.book.category.name }}</p>
+                        </div>
+                        <div>
+                            <p style="text-align: justify">
+                                {{ basketItem.book.description }}
+                            </p>
+                        </div>
+                        <div style="margin-bottom: 40px;">
+                            <p>
+                                {{ basketItem.book.author }}
+                            </p>
+                        </div>
+                        <div>
+                            <a href="javascript:void(0)" style="text-decoration: none;" onclick="removeBook({{ basketItem.id }})">
+                                Delete Book from Basket
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td class="col-sm-4">
+                    <span class="col-sm-offset-1 col-sm-4">Unit Price:</span>
+                    <span class="col-sm-offset-2 col-sm-4">{{ basketItem.book.price }} IRR</span>
+
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div>
+        <button class="btn btn-success pull-right" style="margin-bottom: 40px;">
+            Go to Payment
+        </button>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+
+        function removeBook(id) {
+            $.ajax({
+                type: "POST",
+                url: "/shop/removeBasket/",
+                data: {
+                    'basketItemId': 1
+                }
+            }).done(function (data) {
+                console.log(data);
+                if (data.status == 'success') {
+                    alert('success');
+                }
+                else {
+                    alert("This book has recently added to your basket.");
+                }
+            });
+        }
+    </script>
+{% endblock javascript %}

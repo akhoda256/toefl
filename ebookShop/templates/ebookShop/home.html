@@ -1,733 +1,547 @@
-<!doctype html>
-<html lang="en-US">
-<head>
-<meta charset="UTF-8"><script type="text/javascript">window.NREUM||(NREUM={}),__nr_require=function(e,n,t){function r(t){if(!n[t]){var o=n[t]={exports:{}};e[t][0].call(o.exports,function(n){var o=e[t][1][n];return r(o||n)},o,o.exports)}return n[t].exports}if("function"==typeof __nr_require)return __nr_require;for(var o=0;o<t.length;o++)r(t[o]);return r}({1:[function(e,n,t){function r(){}function o(e,n,t){return function(){return i(e,[c.now()].concat(u(arguments)),n?null:this,t),n?void 0:this}}var i=e("handle"),a=e(2),u=e(3),f=e("ee").get("tracer"),c=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var p=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],d="api-",l=d+"ixn-";a(p,function(e,n){s[n]=o(d+n,!0,"api")}),s.addPageAction=o(d+"addPageAction",!0),s.setCurrentRouteName=o(d+"routeName",!0),n.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,n){var t={},r=this,o="function"==typeof n;return i(l+"tracer",[c.now(),e,t],r),function(){if(f.emit((o?"":"no-")+"fn-start",[c.now(),r,o],t),o)try{return n.apply(this,arguments)}finally{f.emit("fn-end",[c.now()],t)}}}};a("setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,n){m[n]=o(l+n)}),newrelic.noticeError=function(e){"string"==typeof e&&(e=new Error(e)),i("err",[e,c.now()])}},{}],2:[function(e,n,t){function r(e,n){var t=[],r="",i=0;for(r in e)o.call(e,r)&&(t[i]=n(r,e[r]),i+=1);return t}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],3:[function(e,n,t){function r(e,n,t){n||(n=0),"undefined"==typeof t&&(t=e?e.length:0);for(var r=-1,o=t-n||0,i=Array(o<0?0:o);++r<o;)i[r]=e[n+r];return i}n.exports=r},{}],4:[function(e,n,t){n.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,n,t){function r(){}function o(e){function n(e){return e&&e instanceof r?e:e?f(e,u,i):i()}function t(t,r,o,i){if(!d.aborted||i){e&&e(t,r,o);for(var a=n(o),u=m(t),f=u.length,c=0;c<f;c++)u[c].apply(a,r);var p=s[y[t]];return p&&p.push([b,t,r,a]),a}}function l(e,n){v[e]=m(e).concat(n)}function m(e){return v[e]||[]}function w(e){return p[e]=p[e]||o(t)}function g(e,n){c(e,function(e,t){n=n||"feature",y[t]=n,n in s||(s[n]=[])})}var v={},y={},b={on:l,emit:t,get:w,listeners:m,context:n,buffer:g,abort:a,aborted:!1};return b}function i(){return new r}function a(){(s.api||s.feature)&&(d.aborted=!0,s=d.backlog={})}var u="nr@context",f=e("gos"),c=e(2),s={},p={},d=n.exports=o();d.backlog=s},{}],gos:[function(e,n,t){function r(e,n,t){if(o.call(e,n))return e[n];var r=t();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,n,{value:r,writable:!0,enumerable:!1}),r}catch(i){}return e[n]=r,r}var o=Object.prototype.hasOwnProperty;n.exports=r},{}],handle:[function(e,n,t){function r(e,n,t,r){o.buffer([e],r),o.emit(e,n,t)}var o=e("ee").get("handle");n.exports=r,r.ee=o},{}],id:[function(e,n,t){function r(e){var n=typeof e;return!e||"object"!==n&&"function"!==n?-1:e===window?0:a(e,i,function(){return o++})}var o=1,i="nr@id",a=e("gos");n.exports=r},{}],loader:[function(e,n,t){function r(){if(!x++){var e=h.info=NREUM.info,n=d.getElementsByTagName("script")[0];if(setTimeout(s.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&n))return s.abort();c(y,function(n,t){e[n]||(e[n]=t)}),f("mark",["onload",a()+h.offset],null,"api");var t=d.createElement("script");t.src="https://"+e.agent,n.parentNode.insertBefore(t,n)}}function o(){"complete"===d.readyState&&i()}function i(){f("mark",["domContent",a()+h.offset],null,"api")}function a(){return E.exists&&performance.now?Math.round(performance.now()):(u=Math.max((new Date).getTime(),u))-h.offset}var u=(new Date).getTime(),f=e("handle"),c=e(2),s=e("ee"),p=window,d=p.document,l="addEventListener",m="attachEvent",w=p.XMLHttpRequest,g=w&&w.prototype;NREUM.o={ST:setTimeout,CT:clearTimeout,XHR:w,REQ:p.Request,EV:p.Event,PR:p.Promise,MO:p.MutationObserver};var v=""+location,y={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1026.min.js"},b=w&&g&&g[l]&&!/CriOS/.test(navigator.userAgent),h=n.exports={offset:u,now:a,origin:v,features:{},xhrWrappable:b};e(1),d[l]?(d[l]("DOMContentLoaded",i,!1),p[l]("load",r,!1)):(d[m]("onreadystatechange",o),p[m]("onload",r)),f("mark",["firstbyte",u],null,"api");var x=0,E=e(4)},{}]},{},["loader"]);</script>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
-<link rel="profile" href="http://gmpg.org/xfn/11">
-<link rel="pingback" href="https://demo.woothemes.com/bookshop/xmlrpc.php">
-
-<title>Bookshop &#8211; Feed your soul, read a book!</title>
-<link rel='dns-prefetch' href='//fonts.googleapis.com' />
-<link rel='dns-prefetch' href='//s.w.org' />
-<link rel="alternate" type="application/rss+xml" title="Bookshop &raquo; Feed" href="https://demo.woothemes.com/bookshop/feed/" />
-<link rel="alternate" type="application/rss+xml" title="Bookshop &raquo; Comments Feed" href="https://demo.woothemes.com/bookshop/comments/feed/" />
-		<script type="text/javascript">
-			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/2.3\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/demo.woothemes.com\/bookshop\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.8"}};
-			!function(a,b,c){function d(a){var b,c,d,e,f=String.fromCharCode;if(!k||!k.fillText)return!1;switch(k.clearRect(0,0,j.width,j.height),k.textBaseline="top",k.font="600 32px Arial",a){case"flag":return k.fillText(f(55356,56826,55356,56819),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,56826,8203,55356,56819),0,0),c=j.toDataURL(),b===c&&(k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447),0,0),b=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447),0,0),c=j.toDataURL(),b!==c);case"emoji4":return k.fillText(f(55358,56794,8205,9794,65039),0,0),d=j.toDataURL(),k.clearRect(0,0,j.width,j.height),k.fillText(f(55358,56794,8203,9794,65039),0,0),e=j.toDataURL(),d!==e}return!1}function e(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i,j=b.createElement("canvas"),k=j.getContext&&j.getContext("2d");for(i=Array("flag","emoji4"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
-		</script>
-		<style type="text/css">
-img.wp-smiley,
-img.emoji {
-	display: inline !important;
-	border: none !important;
-	box-shadow: none !important;
-	height: 1em !important;
-	width: 1em !important;
-	margin: 0 .07em !important;
-	vertical-align: -0.1em !important;
-	background: none !important;
-	padding: 0 !important;
-}
-</style>
-<link rel='stylesheet' id='all-css-0' href='https://demo.woothemes.com/bookshop/wp-content/themes/storefront/style.css?m=1496325856g' type='text/css' media='all' />
-<style id='storefront-style-inline-css' type='text/css'>
-
-			.main-navigation ul li a,
-			.site-title a,
-			ul.menu li a,
-			.site-branding h1 a,
-			.site-footer .storefront-handheld-footer-bar a:not(.button),
-			button.menu-toggle,
-			button.menu-toggle:hover {
-				color: #657E21;
-			}
-
-			button.menu-toggle,
-			button.menu-toggle:hover {
-				border-color: #657E21;
-			}
-
-			.main-navigation ul li a:hover,
-			.main-navigation ul li:hover > a,
-			.site-title a:hover,
-			a.cart-contents:hover,
-			.site-header-cart .widget_shopping_cart a:hover,
-			.site-header-cart:hover > li > a,
-			ul.menu li.current-menu-item > a {
-				color: #97b053;
-			}
-
-			table th {
-				background-color: #f0efeb;
-			}
-
-			table tbody td {
-				background-color: #f5f4f0;
-			}
-
-			table tbody tr:nth-child(2n) td {
-				background-color: #f3f2ee;
-			}
-
-			.site-header,
-			.secondary-navigation ul ul,
-			.main-navigation ul.menu > li.menu-item-has-children:after,
-			.secondary-navigation ul.menu ul,
-			.storefront-handheld-footer-bar,
-			.storefront-handheld-footer-bar ul li > a,
-			.storefront-handheld-footer-bar ul li.search .site-search,
-			button.menu-toggle,
-			button.menu-toggle:hover {
-				background-color: #ffffff;
-			}
-
-			p.site-description,
-			.site-header,
-			.storefront-handheld-footer-bar {
-				color: #474747;
-			}
-
-			.storefront-handheld-footer-bar ul li.cart .count,
-			button.menu-toggle:after,
-			button.menu-toggle:before,
-			button.menu-toggle span:before {
-				background-color: #657E21;
-			}
-
-			.storefront-handheld-footer-bar ul li.cart .count {
-				color: #ffffff;
-			}
-
-			.storefront-handheld-footer-bar ul li.cart .count {
-				border-color: #ffffff;
-			}
-
-			h1, h2, h3, h4, h5, h6 {
-				color: #444444;
-			}
-
-			.widget h1 {
-				border-bottom-color: #444444;
-			}
-
-			body,
-			.secondary-navigation a,
-			.onsale,
-			.pagination .page-numbers li .page-numbers:not(.current), .woocommerce-pagination .page-numbers li .page-numbers:not(.current) {
-				color: #777777;
-			}
-
-			.widget-area .widget a,
-			.hentry .entry-header .posted-on a,
-			.hentry .entry-header .byline a {
-				color: #a9a9a9;
-			}
-
-			a  {
-				color: #657E21;
-			}
-
-			a:focus,
-			.button:focus,
-			.button.alt:focus,
-			.button.added_to_cart:focus,
-			.button.wc-forward:focus,
-			button:focus,
-			input[type="button"]:focus,
-			input[type="reset"]:focus,
-			input[type="submit"]:focus {
-				outline-color: #657E21;
-			}
-
-			button, input[type="button"], input[type="reset"], input[type="submit"], .button, .added_to_cart, .widget a.button, .site-header-cart .widget_shopping_cart a.button {
-				background-color: #657E21;
-				border-color: #657E21;
-				color: #ffffff;
-			}
-
-			button:hover, input[type="button"]:hover, input[type="reset"]:hover, input[type="submit"]:hover, .button:hover, .added_to_cart:hover, .widget a.button:hover, .site-header-cart .widget_shopping_cart a.button:hover {
-				background-color: #4c6508;
-				border-color: #4c6508;
-				color: #ffffff;
-			}
-
-			button.alt, input[type="button"].alt, input[type="reset"].alt, input[type="submit"].alt, .button.alt, .added_to_cart.alt, .widget-area .widget a.button.alt, .added_to_cart, .pagination .page-numbers li .page-numbers.current, .woocommerce-pagination .page-numbers li .page-numbers.current, .widget a.button.checkout {
-				background-color: #922627;
-				border-color: #922627;
-				color: #ffffff;
-			}
-
-			button.alt:hover, input[type="button"].alt:hover, input[type="reset"].alt:hover, input[type="submit"].alt:hover, .button.alt:hover, .added_to_cart.alt:hover, .widget-area .widget a.button.alt:hover, .added_to_cart:hover, .widget a.button.checkout:hover {
-				background-color: #790d0e;
-				border-color: #790d0e;
-				color: #ffffff;
-			}
-
-			#comments .comment-list .comment-content .comment-text {
-				background-color: #f0efeb;
-			}
-
-			.site-footer {
-				background-color: #ffffff;
-				color: #777777;
-			}
-
-			.site-footer a:not(.button) {
-				color: #657E21;
-			}
-
-			.site-footer h1, .site-footer h2, .site-footer h3, .site-footer h4, .site-footer h5, .site-footer h6 {
-				color: #444444;
-			}
-
-			#order_review,
-			#payment .payment_methods li .payment_box {
-				background-color: #F7F6F2;
-			}
-
-			#payment .payment_methods li {
-				background-color: #f2f1ed;
-			}
-
-			#payment .payment_methods li:hover {
-				background-color: #edece8;
-			}
-
-			@media screen and ( min-width: 768px ) {
-				.secondary-navigation ul.menu a:hover {
-					color: #606060;
-				}
-
-				.secondary-navigation ul.menu a {
-					color: #474747;
-				}
-
-				.site-header-cart .widget_shopping_cart,
-				.main-navigation ul.menu ul.sub-menu,
-				.main-navigation ul.nav-menu ul.children {
-					background-color: #f7f7f7;
-				}
-			}
-</style>
-<link rel='stylesheet' id='bookshop-fonts-css'  href='https://fonts.googleapis.com/css?family=Merriweather%3A400%2C400italic%2C700%7CLato%3A300%2C400%2C400italic%2C700%2C700italic%2C900&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
-<link rel='stylesheet' id='all-css-2' href='https://demo.woothemes.com/bookshop/wp-content/themes/storefront/assets/sass/base/icons.css?m=1496325856g' type='text/css' media='all' />
-<link rel='stylesheet' id='storefront-fonts-css'  href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,600,700,900&#038;subset=latin%2Clatin-ext' type='text/css' media='all' />
-<link rel='stylesheet' id='all-css-4' href='https://demo.woothemes.com/bookshop/_static/??-eJydkN0KwjAMhV/IWkQteiE+S9dmP25tSpMy+vZW2XAyFPEmCSc5X0LkGIRBz+BZcgsOSBJjhDoWUWoi4KKULG/AQZt+zltDtJELdxhS03mSNWhOEUhUWYyIE3QiFZMcdMbEK//37YVk0DmIBpb1J0qF2FOLoeDysJ6ab30tEyGiTYYFtTp2vlke/DODuDN9FtpawSiMjvwXxkGjS/Dp7W3PHnj7IFzdZXc4K6VOx726Ax+brIc=' type='text/css' media='all' />
-<style id='storefront-woocommerce-style-inline-css' type='text/css'>
-
-			a.cart-contents,
-			.site-header-cart .widget_shopping_cart a {
-				color: #657E21;
-			}
-
-			table.cart td.product-remove,
-			table.cart td.actions {
-				border-top-color: #F7F6F2;
-			}
-
-			.woocommerce-tabs ul.tabs li.active a,
-			ul.products li.product .price,
-			.onsale,
-			.widget_search form:before,
-			.widget_product_search form:before {
-				color: #777777;
-			}
-
-			.woocommerce-breadcrumb a,
-			a.woocommerce-review-link,
-			.product_meta a {
-				color: #a9a9a9;
-			}
-
-			.onsale {
-				border-color: #777777;
-			}
-
-			.star-rating span:before,
-			.quantity .plus, .quantity .minus,
-			p.stars a:hover:after,
-			p.stars a:after,
-			.star-rating span:before,
-			#payment .payment_methods li input[type=radio]:first-child:checked+label:before {
-				color: #657E21;
-			}
-
-			.widget_price_filter .ui-slider .ui-slider-range,
-			.widget_price_filter .ui-slider .ui-slider-handle {
-				background-color: #657E21;
-			}
-
-			.woocommerce-breadcrumb,
-			#reviews .commentlist li .comment_container {
-				background-color: #f0efeb;
-			}
-
-			.order_details {
-				background-color: #f0efeb;
-			}
-
-			.order_details li {
-				border-bottom: 1px dotted #dbdad6;
-			}
-
-			.order_details:before,
-			.order_details:after {
-				background: -webkit-linear-gradient(transparent 0,transparent 0),-webkit-linear-gradient(135deg,#f0efeb 33.33%,transparent 33.33%),-webkit-linear-gradient(45deg,#f0efeb 33.33%,transparent 33.33%)
-			}
-
-			@media screen and ( min-width: 768px ) {
-				.site-header-cart .widget_shopping_cart,
-				.site-header .product_list_widget li .quantity {
-					color: #474747;
-				}
-			}
-</style>
-<style id='storefront-child-style-inline-css' type='text/css'>
-
-				.secondary-navigation ul.menu li a,
-				.woocommerce-breadcrumb a,
-				ul.products li.product .price,
-				.star-rating span:before {
-					color: #922627;
-				}
-
-				.site-header-cart .widget_shopping_cart, .main-navigation ul.menu ul.sub-menu, .main-navigation ul.nav-menu ul.children {
-					background-color: #ffffff;
-				}
-
-				.star-rating:before {
-					color: #777777;
-				}
-
-				.single-product div.product .summary .price,
-				#reviews .commentlist li .review-meta strong,
-				.main-navigation ul li.smm-active .widget h3.widget-title {
-					color: #444444;
-				}
-
-				ul.products li.product h3,
-				ul.products li.product .button,
-				ul.products li.product .added_to_cart,
-				.widget-area .widget a:not(.button) {
-					color: #657E21;
-				}
-
-				.main-navigation ul li .smm-mega-menu ul.products li.product a.button.add_to_cart_button,
-				.main-navigation ul li .smm-mega-menu ul.products li.product a.added_to_cart,
-				.main-navigation ul li .smm-mega-menu ul.products li.product a.button.add_to_cart_button:hover,
-				.main-navigation ul li .smm-mega-menu ul.products li.product a.added_to_cart:hover,
-				.main-navigation ul li .smm-mega-menu ul.products li.product a.button.product_type_grouped,
-				.main-navigation ul li .smm-mega-menu ul.products li.product a.button.product_type_grouped:hover {
-					color: #657E21 !important;
-					background-color: transparent !important;
-				}
-
-				.widget-area .widget a:hover,
-				.main-navigation ul li a:hover,
-				.main-navigation ul li:hover > a,
-				.site-title a:hover, a.cart-contents:hover,
-				.site-header-cart .widget_shopping_cart a:hover,
-				.site-header-cart:hover > li > a,
-				ul.menu li.current-menu-item > a {
-					color: #3d5600;
-				}
-
-				ul.products li.product .format,
-				ul.products li.product .author,
-				ul.products li.product .button:before,
-				mark {
-					color: #777777;
-				}
-
-				.onsale {
-					background-color: #657E21;
-					color: #F7F6F2;
-				}
-
-				.onsale:before {
-					border-right-color: #657E21;
-				}
-
-				.onsale:after {
-					border-left-color: #657E21;
-				}
-
-				.secondary-navigation ul.menu li a:hover {
-					color: #ba4e4f;
-				}
-
-				.site-header:before {
-					background-color: #657E21;
-				}
-
-				.button,
-				button:not(.pswp__button),
-				input[type=button],
-				input[type=reset],
-				input[type=submit],
-				.site-header-cart .cart-contents {
-					background: #657E21; /* Old browsers */
-					background: -moz-linear-gradient(top, #799235 0%, #657E21 100%); /* FF3.6-15 */
-					background: -webkit-linear-gradient(top, #799235 0%,#657E21 100%); /* Chrome10-25,Safari5.1-6 */
-					background: linear-gradient(to bottom, #799235 0%,#657E21 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#799235", endColorstr="#657E21",GradientType=0 ); /* IE6-9 */
-					color: #ffffff
-				}
-
-				.button:hover,
-				button:not(.pswp__button):hover,
-				input[type=button]:hover,
-				input[type=reset]:hover,
-				input[type=submit]:hover,
-				.site-header-cart .cart-contents:hover {
-					background: #657E21; /* Old browsers */
-					background: -moz-linear-gradient(top, #657E21 0%, #425b00 100%); /* FF3.6-15 */
-					background: -webkit-linear-gradient(top, #657E21 0%,#425b00 100%); /* Chrome10-25,Safari5.1-6 */
-					background: linear-gradient(to bottom, #657E21 0%,#425b00 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#657E21", endColorstr="#425b00",GradientType=0 ); /* IE6-9 */
-				}
-
-				.button.alt,
-				button.alt,
-				input[type=button].alt,
-				input[type=reset].alt,
-				input[type=submit].alt {
-					background: #922627; /* Old browsers */
-					background: -moz-linear-gradient(top, #a63a3b 0%, #922627 100%); /* FF3.6-15 */
-					background: -webkit-linear-gradient(top, #a63a3b 0%,#922627 100%); /* Chrome10-25,Safari5.1-6 */
-					background: linear-gradient(to bottom, #a63a3b 0%,#922627 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#a63a3b", endColorstr="#922627",GradientType=0 ); /* IE6-9 */
-					color: #ffffff
-				}
-
-				.button.alt:hover,
-				button.alt:hover,
-				input[type=button].alt:hover,
-				input[type=reset].alt:hover,
-				input[type=submit].alt:hover {
-					background: #922627; /* Old browsers */
-					background: -moz-linear-gradient(top, #922627 0%, #6f0304 100%); /* FF3.6-15 */
-					background: -webkit-linear-gradient(top, #922627 0%,#6f0304 100%); /* Chrome10-25,Safari5.1-6 */
-					background: linear-gradient(to bottom, #922627 0%,#6f0304 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-					filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#922627", endColorstr="#6f0304",GradientType=0 ); /* IE6-9 */
-				}
-
-				.site-header-cart .cart-contents:hover,
-				.site-header-cart:hover .cart-contents,
-				ul.menu li.current-menu-item > a.cart-contents {
-					color: #ffffff
-				}
-
-				ul.menu li.current-menu-item > a,
-				table th,
-				#payment .payment_methods li label {
-					color: #474747;
-				}
-
-				.main-navigation ul.nav-menu > li:hover > a,
-				ul.menu li.current-menu-item > a:not(.cart-contents),
-				.main-navigation ul.menu ul,
-				.site-header-cart .widget_shopping_cart,
-				.smm-mega-menu {
-					background: #ffffff;
-				}
-
-				.main-navigation ul li.smm-active li:hover a {
-					color: #657E21 !important;
-				}
-
-				.widget-area .widget,
-				table,
-				.woocommerce-tabs ul.tabs,
-				.storefront-sorting,
-				#order_review_heading,
-				#order_review {
-					background: #fefdf9;
-				}
-
-				.widget-area .widget.widget_shopping_cart {
-					background: #fffffc;
-				}
-
-				.widget-area .widget .widget-title, .widget-area .widget .widgettitle,
-				.site-main .storefront-product-section .section-title {
-					border-bottom-color: #e8e7e3;
-				}
-
-				.widget-area .widget .widget-title:after, .widget-area .widget .widgettitle:after {
-					background-color: #e8e7e3;
-					border: 2px solid #fefdf9;
-					box-shadow: 0 0 0 2px #e8e7e3;
-				}
-
-				.site-main .storefront-product-section .section-title:after {
-					background-color: #e8e7e3;
-					border: 2px solid #F7F6F2;
-					box-shadow: 0 0 0 2px #e8e7e3;
-				}
-</style>
-<style id='ssatc-styles-inline-css' type='text/css'>
-
-			.ssatc-sticky-add-to-cart {
-				background-color: #F7F6F2;
-				color: #777777;
-			}
-
-			.ssatc-sticky-add-to-cart a:not(.button) {
-				color: #657E21;
-			}
-</style>
-<style id='storefront-mega-menus-frontend-inline-css' type='text/css'>
-
-			.smm-mega-menu {
-				background-color: #ffffff;
-			}
-
-			.main-navigation ul li.smm-active .smm-mega-menu a.button {
-				background-color: #657E21 !important;
-				border-color: #657E21 !important;
-				color: #ffffff !important;
-			}
-
-			.main-navigation ul li.smm-active .smm-mega-menu a.button:hover {
-				background-color: #4c6508 !important;
-				border-color: #4c6508 !important;
-				color: #ffffff !important;
-			}
-
-			.main-navigation ul li.smm-active .smm-mega-menu a.added_to_cart {
-				background-color: #922627 !important;
-				border-color: #922627 !important;
-				color: #ffffff !important;
-			}
-
-			.main-navigation ul li.smm-active .smm-mega-menu a.added_to_cart:hover {
-				background-color: #790d0e !important;
-				border-color: #790d0e !important;
-				color: #ffffff !important;
-			}
-
-			.main-navigation ul li.smm-active .widget h3.widget-title,
-			.main-navigation ul li.smm-active li ul.products li.product h3 {
-				color: #474747;
-			}
-
-			.main-navigation ul li.smm-active ul.sub-menu li a {
-				color: #657E21;
-			}
-</style>
-<script type='text/javascript' src='https://demo.woothemes.com/bookshop/_static/??-eJzTLy/QzcxLzilNSS3WzwKiwtLUokoopZdVrKOPT4FubmZ6UWJJql5uZh5QsX2uraGJpZmliaWFmWUWACYGIMc='></script>
-<link rel='https://api.w.org/' href='https://demo.woothemes.com/bookshop/wp-json/' />
-<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://demo.woothemes.com/bookshop/xmlrpc.php?rsd" />
-<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://demo.woothemes.com/bookshop/wp-includes/wlwmanifest.xml" />
-<meta name="generator" content="WordPress 4.8" />
-<meta name="generator" content="WooCommerce 3.0.7" />
-<link rel="canonical" href="https://demo.woothemes.com/bookshop/" />
-<link rel='shortlink' href='https://demo.woothemes.com/bookshop/' />
-<link rel="alternate" type="application/json+oembed" href="https://demo.woothemes.com/bookshop/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fdemo.woothemes.com%2Fbookshop%2F" />
-<link rel="alternate" type="text/xml+oembed" href="https://demo.woothemes.com/bookshop/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fdemo.woothemes.com%2Fbookshop%2F&#038;format=xml" />
-	<noscript><style>.woocommerce-product-gallery{ opacity: 1 !important; }</style></noscript>
-	<style type="text/css" id="custom-background-css">
-body.custom-background { background-color: ##F7F6F2; background-image: url("https://demo.woothemes.com/bookshop/wp-content/themes/bookshop/assets/images/paper.png"); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: fixed; }
-</style>
-</head>
-
-<body class="home page-template page-template-template-homepage page-template-template-homepage-php page page-id-178 custom-background left-sidebar woocommerce-active">
-<div id="page" class="hfeed site">
-
-	<div id="content" class="site-content" tabindex="-1">
-		<div class="col-full">
-
-		<div class="woocommerce"></div>
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
-
-			<section class="storefront-product-section storefront-product-categories" aria-label="Product Categories"><h2 class="section-title">Shop by Category</h2><div class="woocommerce columns-6"><ul class="products">
-<li class="product-category product first">
-	<a href="https://demo.woothemes.com/bookshop/product-category/childrens/"><img src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/childrens2.png?w=600" alt="Children&#039;s" width="600" height="800" />		<h2 class="woocommerce-loop-category__title">
-			Children's <mark class="count">(35)</mark>		</h2>
-		</a></li>
-<li class="product-category product">
-	<a href="https://demo.woothemes.com/bookshop/product-category/crime/"><img src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/crime.png?w=464" alt="Crime" width="600" height="800" />		<h2 class="woocommerce-loop-category__title">
-			Crime <mark class="count">(1)</mark>		</h2>
-		</a></li>
-<li class="product-category product">
-	<a href="https://demo.woothemes.com/bookshop/product-category/education/"><img src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/education1.png?w=487" alt="Education" width="600" height="800" />		<h2 class="woocommerce-loop-category__title">
-			Education <mark class="count">(3)</mark>		</h2>
-		</a></li>
-<li class="product-category product">
-	<a href="https://demo.woothemes.com/bookshop/product-category/fantasy/"><img src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/fantasy.png?w=487" alt="Fantasy" width="600" height="800" />		<h2 class="woocommerce-loop-category__title">
-			Fantasy <mark class="count">(11)</mark>		</h2>
-		</a></li>
-<li class="product-category product">
-	<a href="https://demo.woothemes.com/bookshop/product-category/horror/"><img src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/horror.png?w=488" alt="Horror" width="600" height="800" />		<h2 class="woocommerce-loop-category__title">
-			Horror <mark class="count">(10)</mark>		</h2>
-		</a></li>
-<li class="product-category product last">
-	<a href="https://demo.woothemes.com/bookshop/product-category/modern-fiction/"><img src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/modern-fiction.png?w=488" alt="Modern Fiction" width="600" height="800" />		<h2 class="woocommerce-loop-category__title">
-			Modern Fiction <mark class="count">(5)</mark>		</h2>
-		</a></li>
-<li class="product-category product first">
-	<a href="https://demo.woothemes.com/bookshop/product-category/science-fiction/"><img src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/scifi.png?w=464" alt="Science Fiction" width="600" height="800" />		<h2 class="woocommerce-loop-category__title">
-			Science Fiction <mark class="count">(12)</mark>		</h2>
-		</a></li>
-</ul>
-</div></section><section class="storefront-product-section storefront-recent-products" aria-label="Recent Products"><h2 class="section-title">New In</h2><div class="woocommerce columns-5">
-
-			<ul class="products">
-
-
-					<li class="post-167 product type-product status-publish has-post-thumbnail product_cat-childrens product_tag-harry-potter first instock shipping-taxable purchasable product-type-simple">
-	<a href="https://demo.woothemes.com/bookshop/product/harry-potter-and-the-philosophers-stone/" class="woocommerce-LoopProduct-link"><img width="333" height="500" src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/7355968-L.jpg?w=333" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="7355968-L" title="7355968-L" /><span class="author">J. K. Rowling</span><h2 class="woocommerce-loop-product__title">Harry Potter and the Philosopher&#8217;s Stone</h2><span class="format">Paperback</span>
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>7.99</span></span>
-</a><a rel="nofollow" href="/bookshop/?add-to-cart=167" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a></li>
-
-
-					<li class="post-166 product type-product status-publish has-post-thumbnail product_cat-childrens product_tag-harry-potter  instock shipping-taxable purchasable product-type-simple">
-	<a href="https://demo.woothemes.com/bookshop/product/harry-potter-and-the-order-of-the-phoenix/" class="woocommerce-LoopProduct-link"><img width="338" height="500" src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/7285863-L.jpg?w=338" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="7285863-L" title="7285863-L" /><span class="author">J. K. Rowling</span><h2 class="woocommerce-loop-product__title">Harry Potter and the Order of the Phoenix</h2><span class="format">Paperback</span>
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>5.99</span></span>
-</a><a rel="nofollow" href="/bookshop/?add-to-cart=166" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a></li>
-
-
-					<li class="post-165 product type-product status-publish has-post-thumbnail product_cat-childrens product_tag-harry-potter  instock shipping-taxable purchasable product-type-simple">
-	<a href="https://demo.woothemes.com/bookshop/product/harry-potter-and-the-goblet-of-fire/" class="woocommerce-LoopProduct-link"><img width="296" height="475" src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/7236486-L.jpg?w=296" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="7236486-L" title="7236486-L" /><span class="author">J. K. Rowling</span><h2 class="woocommerce-loop-product__title">Harry Potter and the Goblet of Fire</h2><span class="format">Hardback</span>
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>9.99</span></span>
-</a><a rel="nofollow" href="/bookshop/?add-to-cart=165" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a></li>
-
-
-					<li class="post-164 product type-product status-publish has-post-thumbnail product_cat-science-fiction  instock shipping-taxable purchasable product-type-simple">
-	<a href="https://demo.woothemes.com/bookshop/product/rendezvous-with-rama/" class="woocommerce-LoopProduct-link"><img width="331" height="500" src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/7000026-L.jpg?w=331" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="7000026-L" title="7000026-L" /><span class="author">Arthur C. Clarke</span><h2 class="woocommerce-loop-product__title">Rendezvous with Rama</h2><span class="format">Paperback</span>
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>4.99</span></span>
-</a><a rel="nofollow" href="/bookshop/?add-to-cart=164" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a></li>
-
-
-					<li class="post-163 product type-product status-publish has-post-thumbnail product_cat-childrens product_tag-harry-potter last instock shipping-taxable purchasable product-type-simple">
-	<a href="https://demo.woothemes.com/bookshop/product/harry-potter-and-the-half-blood-prince/" class="woocommerce-LoopProduct-link"><img width="185" height="269" src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/6666521-L.jpg?w=185" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="6666521-L" title="6666521-L" /><span class="author">J. K. Rowling</span><h2 class="woocommerce-loop-product__title">Harry Potter and the Half-Blood Prince</h2><span class="format">Paperback</span>
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>8.99</span></span>
-</a><a rel="nofollow" href="/bookshop/?add-to-cart=163" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a></li>
-
-
-			</ul>
-
-
-			</div></section><section class="storefront-product-section storefront-popular-products" aria-label="Popular Products"><h2 class="section-title">Fan Favorites</h2><div class="woocommerce columns-5">
-
-			<ul class="products">
-
-
-					<li class="post-147 product type-product status-publish has-post-thumbnail product_cat-modern-fiction first instock shipping-taxable purchasable product-type-simple">
-	<a href="https://demo.woothemes.com/bookshop/product/animal-farm/" class="woocommerce-LoopProduct-link"><img width="326" height="500" src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/107810-L.jpg?w=326" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="107810-L" title="107810-L" /><span class="author">George Orwell</span><h2 class="woocommerce-loop-product__title">Animal Farm</h2><span class="format">Paperback</span><div class="star-rating" title="Rated 5.00 out of 5"><span style="width:100%"><strong class="rating">5.00</strong> out of 5</span></div>
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>3.99</span></span>
-</a><a rel="nofollow" href="/bookshop/?add-to-cart=147" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a></li>
-
-
-					<li class="post-117 product type-product status-publish has-post-thumbnail product_cat-fantasy  instock shipping-taxable purchasable product-type-simple">
-	<a href="https://demo.woothemes.com/bookshop/product/j-r-r-tolkien-collection-part-2/" class="woocommerce-LoopProduct-link"><img width="372" height="475" src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/0000000022-L.jpg?w=372" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="0000000022-L" title="0000000022-L" /><span class="author">J. R. R. Tolkien</span><h2 class="woocommerce-loop-product__title">J. R. R. Tolkien Collection Part 2</h2><span class="format">Audio Book</span><div class="star-rating" title="Rated 5.00 out of 5"><span style="width:100%"><strong class="rating">5.00</strong> out of 5</span></div>
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>24.99</span></span>
-</a><a rel="nofollow" href="/bookshop/?add-to-cart=117" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a></li>
-
-
-					<li class="post-100 product type-product status-publish has-post-thumbnail product_cat-horror  instock sale shipping-taxable purchasable product-type-simple">
-	<a href="https://demo.woothemes.com/bookshop/product/it/" class="woocommerce-LoopProduct-link"><img width="322" height="475" src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/401227-L.jpg?w=322" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="401227-L" title="401227-L" /><span class="author">Stephen King</span><h2 class="woocommerce-loop-product__title">IT</h2><span class="format">Paperback</span>
-	<span class="onsale">Sale!</span>
-
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>4.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>3.99</span></ins></span>
-</a><a rel="nofollow" href="/bookshop/?add-to-cart=100" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a></li>
-
-
-					<li class="post-165 product type-product status-publish has-post-thumbnail product_cat-childrens product_tag-harry-potter  instock shipping-taxable purchasable product-type-simple">
-	<a href="https://demo.woothemes.com/bookshop/product/harry-potter-and-the-goblet-of-fire/" class="woocommerce-LoopProduct-link"><img width="296" height="475" src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/7236486-L.jpg?w=296" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="7236486-L" title="7236486-L" /><span class="author">J. K. Rowling</span><h2 class="woocommerce-loop-product__title">Harry Potter and the Goblet of Fire</h2><span class="format">Hardback</span>
-	<span class="price"><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>9.99</span></span>
-</a><a rel="nofollow" href="/bookshop/?add-to-cart=165" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a></li>
-
-
-					<li class="post-92 product type-product status-publish has-post-thumbnail product_cat-childrens last instock sale shipping-taxable purchasable product-type-simple">
-	<a href="https://demo.woothemes.com/bookshop/product/on-beyond-zebra/" class="woocommerce-LoopProduct-link"><img width="350" height="475" src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/0000000219-L.jpg?w=350" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="0000000219-L" title="0000000219-L" /><span class="author">Dr. Seuss</span><h2 class="woocommerce-loop-product__title">On Beyond Zebra</h2><span class="format">Paperback</span>
-	<span class="onsale">Sale!</span>
-
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>4.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>3.99</span></ins></span>
-</a><a rel="nofollow" href="/bookshop/?add-to-cart=92" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a></li>
-
-
-			</ul>
-
-
-			</div></section><section class="storefront-product-section storefront-on-sale-products" aria-label="On Sale Products"><h2 class="section-title">On Sale</h2><div class="woocommerce columns-5">
-
-			<ul class="products">
-
-
-					<li class="post-100 product type-product status-publish has-post-thumbnail product_cat-horror first instock sale shipping-taxable purchasable product-type-simple">
-	<a href="https://demo.woothemes.com/bookshop/product/it/" class="woocommerce-LoopProduct-link"><img width="322" height="475" src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/401227-L.jpg?w=322" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="401227-L" title="401227-L" /><span class="author">Stephen King</span><h2 class="woocommerce-loop-product__title">IT</h2><span class="format">Paperback</span>
-	<span class="onsale">Sale!</span>
-
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>4.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>3.99</span></ins></span>
-</a><a rel="nofollow" href="/bookshop/?add-to-cart=100" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a></li>
-
-
-					<li class="post-112 product type-product status-publish has-post-thumbnail product_cat-horror  instock sale shipping-taxable purchasable product-type-simple">
-	<a href="https://demo.woothemes.com/bookshop/product/needful-things/" class="woocommerce-LoopProduct-link"><img width="321" height="531" src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/needfulthings00step_0001.jpg?w=321" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="needfulthings00step_0001" title="needfulthings00step_0001" /><span class="author">Stephen King</span><h2 class="woocommerce-loop-product__title">Needful Things</h2><span class="format">Paperback</span>
-	<span class="onsale">Sale!</span>
-
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>6.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>5.99</span></ins></span>
-</a><a rel="nofollow" href="/bookshop/?add-to-cart=112" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a></li>
-
-
-					<li class="post-92 product type-product status-publish has-post-thumbnail product_cat-childrens  instock sale shipping-taxable purchasable product-type-simple">
-	<a href="https://demo.woothemes.com/bookshop/product/on-beyond-zebra/" class="woocommerce-LoopProduct-link"><img width="350" height="475" src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/0000000219-L.jpg?w=350" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="0000000219-L" title="0000000219-L" /><span class="author">Dr. Seuss</span><h2 class="woocommerce-loop-product__title">On Beyond Zebra</h2><span class="format">Paperback</span>
-	<span class="onsale">Sale!</span>
-
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>4.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>3.99</span></ins></span>
-</a><a rel="nofollow" href="/bookshop/?add-to-cart=92" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a></li>
-
-
-					<li class="post-93 product type-product status-publish has-post-thumbnail product_cat-childrens  instock sale shipping-taxable purchasable product-type-simple">
-	<a href="https://demo.woothemes.com/bookshop/product/the-cat-in-the-hats-great-big-flap-book/" class="woocommerce-LoopProduct-link"><img width="429" height="475" src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/0000000221-L.jpg?w=429" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="0000000221-L" title="0000000221-L" /><span class="author">Dr. Seuss</span><h2 class="woocommerce-loop-product__title">The Cat in the Hat&#8217;s Great Big Flap Book</h2><span class="format">Hardback</span>
-	<span class="onsale">Sale!</span>
-
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>14.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>12.99</span></ins></span>
-</a><a rel="nofollow" href="/bookshop/?add-to-cart=93" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a></li>
-
-
-					<li class="post-110 product type-product status-publish has-post-thumbnail product_cat-fantasy last instock sale shipping-taxable purchasable product-type-simple">
-	<a href="https://demo.woothemes.com/bookshop/product/the-lord-of-the-rings-the-fellowship-of-the-ring-2/" class="woocommerce-LoopProduct-link"><img width="305" height="500" src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/7382917-L.jpg?w=305" class="attachment-shop_catalog size-shop_catalog wp-post-image" alt="7382917-L" title="7382917-L" /><span class="author">J. R. R. Tolkien</span><h2 class="woocommerce-loop-product__title">The Lord of the Rings &#8211; The Fellowship of the Ring</h2><span class="format">Hardback</span>
-	<span class="onsale">Sale!</span>
-
-	<span class="price"><del><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>23.99</span></del> <ins><span class="woocommerce-Price-amount amount"><span class="woocommerce-Price-currencySymbol">&pound;</span>20.99</span></ins></span>
-</a><a rel="nofollow" href="/bookshop/?add-to-cart=110" class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add to cart</a></li>
-
-
-			</ul>
-
-
-			</div></section>
-		</main><!-- #main -->
-	</div><!-- #primary -->
-
-		</div><!-- .col-full -->
-	</div><!-- #content -->
-
-</div><!-- #page -->
-
-		<script>dataLayer = [{"settings_ga_id":"UA-25052016-1"}]</script>
-        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-W64W8Q" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W64W8Q');</script>
-		<script type="application/ld+json">{"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":"1","item":{"name":"Home"}}]}</script><script type='text/javascript'>
-/* <![CDATA[ */
-var wc_add_to_cart_params = {"ajax_url":"\/bookshop\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/bookshop\/?wc-ajax=%%endpoint%%","i18n_view_cart":"View cart","cart_url":"https:\/\/demo.woothemes.com\/bookshop\/cart\/","is_cart":"","cart_redirect_after_add":"no"};
-/* ]]> */
-</script>
-<script type='text/javascript'>
-/* <![CDATA[ */
-var woocommerce_params = {"ajax_url":"\/bookshop\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/bookshop\/?wc-ajax=%%endpoint%%"};
-/* ]]> */
-</script>
-<script type='text/javascript'>
-/* <![CDATA[ */
-var wc_cart_fragments_params = {"ajax_url":"\/bookshop\/wp-admin\/admin-ajax.php","wc_ajax_url":"\/bookshop\/?wc-ajax=%%endpoint%%","fragment_name":"wc_fragments"};
-/* ]]> */
-</script>
-<script type='text/javascript' src='https://demo.woothemes.com/bookshop/_static/??-eJylkt1OwzAMhV8I15o0TesF2jUPwAOkidu6beIQJ9t4e0o3UCUQonDnn3M+J5bxEsFKyBQyxql0HBQvIla8p2QJjSplxUGxTYvMoXEOsoA1KVeeQzXoA/6aMrwUSq/QTGLHwve0WtLnpz/gdBbKyDRH1S3aDvn82ar9D8r7YqBNpvOzSb8D5Z48KTbze7WXuIJ8lH5waZZEy7CVL5gzdyazhK1OHTnCxGGEVmxRaPm6FbHeR0/GUfpyHBzsVBzd5BHIN+Tu/ZN/3O3rQ72vj4d6eAPSY/hZ'></script>
-
-<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"949ceaf672","applicationID":"14194630","transactionName":"MQZWYhAFXhdYAUBfWwhMdVUWDV8KFhZRW0QKAkBTTwxfCVwSVVFR","queueTime":0,"applicationTime":176,"atts":"HUFBFFgfTUgbAxYMTxse","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
-</html>
+{% extends 'tpo/base.html' %}
+
+
+        {% block head_css_page %}
+    {% load static %}
+    <link href="{% static "css/home.css" %}"
+          rel="stylesheet" media="screen">
+    <script src="{% static "js/home.js" %}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <link rel="profile" href="http://gmpg.org/xfn/11">
+    <link rel="pingback" href="https://demo.woothemes.com/bookshop/xmlrpc.php">
+
+    <title>Bookshop &#8211; Feed your soul, read a book!</title>
+    <link rel='dns-prefetch' href='//fonts.googleapis.com'/>
+    <link rel='dns-prefetch' href='//s.w.org'/>
+    <link rel="alternate" type="application/rss+xml" title="Bookshop &raquo; Feed"
+          href="https://demo.woothemes.com/bookshop/feed/"/>
+    <link rel="alternate" type="application/rss+xml" title="Bookshop &raquo; Comments Feed"
+          href="https://demo.woothemes.com/bookshop/comments/feed/"/>
+
+    <link rel='stylesheet' id='all-css-0'
+          href='https://demo.woothemes.com/bookshop/wp-content/themes/storefront/style.css?m=1496325856g'
+          type='text/css' media='all'/>
+    <link rel='stylesheet' id='bookshop-fonts-css'
+          href='https://fonts.googleapis.com/css?family=Merriweather%3A400%2C400italic%2C700%7CLato%3A300%2C400%2C400italic%2C700%2C700italic%2C900&#038;subset=latin%2Clatin-ext'
+          type='text/css' media='all'/>
+    <link rel='stylesheet' id='all-css-2'
+          href='https://demo.woothemes.com/bookshop/wp-content/themes/storefront/assets/sass/base/icons.css?m=1496325856g'
+          type='text/css' media='all'/>
+    <link rel='stylesheet' id='storefront-fonts-css'
+          href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,600,700,900&#038;subset=latin%2Clatin-ext'
+          type='text/css' media='all'/>
+    <link rel='stylesheet' id='all-css-4'
+          href='https://demo.woothemes.com/bookshop/_static/??-eJydkN0KwjAMhV/IWkQteiE+S9dmP25tSpMy+vZW2XAyFPEmCSc5X0LkGIRBz+BZcgsOSBJjhDoWUWoi4KKULG/AQZt+zltDtJELdxhS03mSNWhOEUhUWYyIE3QiFZMcdMbEK//37YVk0DmIBpb1J0qF2FOLoeDysJ6ab30tEyGiTYYFtTp2vlke/DODuDN9FtpawSiMjvwXxkGjS/Dp7W3PHnj7IFzdZXc4K6VOx726Ax+brIc='
+          type='text/css' media='all'/>
+    <script type='text/javascript'
+            src='https://demo.woothemes.com/bookshop/_static/??-eJzTLy/QzcxLzilNSS3WzwKiwtLUokoopZdVrKOPT4FubmZ6UWJJql5uZh5QsX2uraGJpZmliaWFmWUWACYGIMc='></script>
+    <link rel='https://api.w.org/' href='https://demo.woothemes.com/bookshop/wp-json/'/>
+    <link rel="EditURI" type="application/rsd+xml" title="RSD"
+          href="https://demo.woothemes.com/bookshop/xmlrpc.php?rsd"/>
+    <link rel="wlwmanifest" type="application/wlwmanifest+xml"
+          href="https://demo.woothemes.com/bookshop/wp-includes/wlwmanifest.xml"/>
+
+    <link rel="canonical" href="https://demo.woothemes.com/bookshop/"/>
+    <link rel='shortlink' href='https://demo.woothemes.com/bookshop/'/>
+    <link rel="alternate" type="application/json+oembed"
+          href="https://demo.woothemes.com/bookshop/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fdemo.woothemes.com%2Fbookshop%2F"/>
+    <link rel="alternate" type="text/xml+oembed"
+          href="https://demo.woothemes.com/bookshop/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fdemo.woothemes.com%2Fbookshop%2F&#038;format=xml"/>
+
+{% endblock head_css_page %}
+{% block content %}
+
+    <div class="home page-template page-template-template-homepage page-template-template-homepage-php page page-id-178 custom-background left-sidebar woocommerce-active">
+        <div id="page" class="hfeed site">
+
+            <div id="content" class="site-content" tabindex="-1">
+                <div class="">
+
+                    <div class="woocommerce"></div>
+                    <div id="primary" class="content-area">
+                        <main id="main" class="site-main" role="main">
+
+                            <section class="storefront-product-section storefront-product-categories"
+                                     aria-label="Product Categories"><h2 class="section-title">Shop by Category</h2>
+                                <div class="woocommerce columns-6">
+                                    <ul class="products">
+                                        <li class="product-category product first">
+                                            <a href="https://demo.woothemes.com/bookshop/product-category/childrens/"><img
+                                                    src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/childrens2.png?w=600"
+                                                    alt="Children&#039;s" width="600" height="800"/>
+                                                <h2 class="woocommerce-loop-category__title">
+                                                    Children's
+                                                    <mark class="count">(35)</mark>
+                                                </h2>
+                                            </a></li>
+                                        <li class="product-category product">
+                                            <a href="https://demo.woothemes.com/bookshop/product-category/crime/"><img
+                                                    src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/crime.png?w=464"
+                                                    alt="Crime" width="600" height="800"/>
+                                                <h2 class="woocommerce-loop-category__title">
+                                                    Crime
+                                                    <mark class="count">(1)</mark>
+                                                </h2>
+                                            </a></li>
+                                        <li class="product-category product">
+                                            <a href="https://demo.woothemes.com/bookshop/product-category/education/"><img
+                                                    src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/education1.png?w=487"
+                                                    alt="Education" width="600" height="800"/>
+                                                <h2 class="woocommerce-loop-category__title">
+                                                    Education
+                                                    <mark class="count">(3)</mark>
+                                                </h2>
+                                            </a></li>
+                                        <li class="product-category product">
+                                            <a href="https://demo.woothemes.com/bookshop/product-category/fantasy/"><img
+                                                    src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/fantasy.png?w=487"
+                                                    alt="Fantasy" width="600" height="800"/>
+                                                <h2 class="woocommerce-loop-category__title">
+                                                    Fantasy
+                                                    <mark class="count">(11)</mark>
+                                                </h2>
+                                            </a></li>
+                                        <li class="product-category product">
+                                            <a href="https://demo.woothemes.com/bookshop/product-category/horror/"><img
+                                                    src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/horror.png?w=488"
+                                                    alt="Horror" width="600" height="800"/>
+                                                <h2 class="woocommerce-loop-category__title">
+                                                    Horror
+                                                    <mark class="count">(10)</mark>
+                                                </h2>
+                                            </a></li>
+                                        <li class="product-category product last">
+                                            <a href="https://demo.woothemes.com/bookshop/product-category/modern-fiction/"><img
+                                                    src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/modern-fiction.png?w=488"
+                                                    alt="Modern Fiction" width="600" height="800"/>
+                                                <h2 class="woocommerce-loop-category__title">
+                                                    Modern Fiction
+                                                    <mark class="count">(5)</mark>
+                                                </h2>
+                                            </a></li>
+                                        <li class="product-category product first">
+                                            <a href="https://demo.woothemes.com/bookshop/product-category/science-fiction/"><img
+                                                    src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/scifi.png?w=464"
+                                                    alt="Science Fiction" width="600" height="800"/>
+                                                <h2 class="woocommerce-loop-category__title">
+                                                    Science Fiction
+                                                    <mark class="count">(12)</mark>
+                                                </h2>
+                                            </a></li>
+                                    </ul>
+                                </div>
+                            </section>
+                            <section class="storefront-product-section storefront-recent-products"
+                                     aria-label="Recent Products"><h2 class="section-title">New In</h2>
+                                <div class="woocommerce columns-5">
+
+                                    <ul class="products">
+
+
+                                        <li class="post-167 product type-product status-publish has-post-thumbnail product_cat-childrens product_tag-harry-potter first instock shipping-taxable purchasable product-type-simple">
+                                            <a href="https://demo.woothemes.com/bookshop/product/harry-potter-and-the-philosophers-stone/"
+                                               class="woocommerce-LoopProduct-link"><img width="333" height="500"
+                                                                                         src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/7355968-L.jpg?w=333"
+                                                                                         class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                                                         alt="7355968-L"
+                                                                                         title="7355968-L"/><span
+                                                    class="author">J. K. Rowling</span>
+                                                <h2 class="woocommerce-loop-product__title">Harry Potter and the
+                                                    Philosopher&#8217;s
+                                                    Stone</h2><span class="format">Paperback</span>
+                                                <span class="price"><span class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>7.99</span></span>
+                                            </a><a rel="nofollow" href="/bookshop/?add-to-cart=167"
+                                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
+                                            to cart</a></li>
+
+
+                                        <li class="post-166 product type-product status-publish has-post-thumbnail product_cat-childrens product_tag-harry-potter  instock shipping-taxable purchasable product-type-simple">
+                                            <a href="https://demo.woothemes.com/bookshop/product/harry-potter-and-the-order-of-the-phoenix/"
+                                               class="woocommerce-LoopProduct-link"><img width="338" height="500"
+                                                                                         src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/7285863-L.jpg?w=338"
+                                                                                         class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                                                         alt="7285863-L"
+                                                                                         title="7285863-L"/><span
+                                                    class="author">J. K. Rowling</span>
+                                                <h2 class="woocommerce-loop-product__title">Harry Potter and the Order
+                                                    of
+                                                    the Phoenix</h2><span class="format">Paperback</span>
+                                                <span class="price"><span class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>5.99</span></span>
+                                            </a><a rel="nofollow" href="/bookshop/?add-to-cart=166"
+                                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
+                                            to cart</a></li>
+
+
+                                        <li class="post-165 product type-product status-publish has-post-thumbnail product_cat-childrens product_tag-harry-potter  instock shipping-taxable purchasable product-type-simple">
+                                            <a href="https://demo.woothemes.com/bookshop/product/harry-potter-and-the-goblet-of-fire/"
+                                               class="woocommerce-LoopProduct-link"><img width="296" height="475"
+                                                                                         src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/7236486-L.jpg?w=296"
+                                                                                         class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                                                         alt="7236486-L"
+                                                                                         title="7236486-L"/><span
+                                                    class="author">J. K. Rowling</span>
+                                                <h2 class="woocommerce-loop-product__title">Harry Potter and the Goblet
+                                                    of
+                                                    Fire</h2><span class="format">Hardback</span>
+                                                <span class="price"><span class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>9.99</span></span>
+                                            </a><a rel="nofollow" href="/bookshop/?add-to-cart=165"
+                                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
+                                            to cart</a></li>
+
+
+                                        <li class="post-164 product type-product status-publish has-post-thumbnail product_cat-science-fiction  instock shipping-taxable purchasable product-type-simple">
+                                            <a href="https://demo.woothemes.com/bookshop/product/rendezvous-with-rama/"
+                                               class="woocommerce-LoopProduct-link"><img width="331" height="500"
+                                                                                         src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/7000026-L.jpg?w=331"
+                                                                                         class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                                                         alt="7000026-L"
+                                                                                         title="7000026-L"/><span
+                                                    class="author">Arthur C. Clarke</span>
+                                                <h2 class="woocommerce-loop-product__title">Rendezvous with Rama</h2>
+                                                <span
+                                                        class="format">Paperback</span>
+                                                <span class="price"><span class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>4.99</span></span>
+                                            </a><a rel="nofollow" href="/bookshop/?add-to-cart=164"
+                                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
+                                            to cart</a></li>
+
+
+                                        <li class="post-163 product type-product status-publish has-post-thumbnail product_cat-childrens product_tag-harry-potter last instock shipping-taxable purchasable product-type-simple">
+                                            <a href="https://demo.woothemes.com/bookshop/product/harry-potter-and-the-half-blood-prince/"
+                                               class="woocommerce-LoopProduct-link"><img width="185" height="269"
+                                                                                         src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/6666521-L.jpg?w=185"
+                                                                                         class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                                                         alt="6666521-L"
+                                                                                         title="6666521-L"/><span
+                                                    class="author">J. K. Rowling</span>
+                                                <h2 class="woocommerce-loop-product__title">Harry Potter and the
+                                                    Half-Blood
+                                                    Prince</h2><span class="format">Paperback</span>
+                                                <span class="price"><span class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>8.99</span></span>
+                                            </a><a rel="nofollow" href="/bookshop/?add-to-cart=163"
+                                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
+                                            to cart</a></li>
+
+
+                                    </ul>
+
+
+                                </div>
+                            </section>
+                            <section class="storefront-product-section storefront-popular-products"
+                                     aria-label="Popular Products"><h2 class="section-title">Fan Favorites</h2>
+                                <div class="woocommerce columns-5">
+
+                                    <ul class="products">
+
+
+                                        <li class="post-147 product type-product status-publish has-post-thumbnail product_cat-modern-fiction first instock shipping-taxable purchasable product-type-simple">
+                                            <a href="https://demo.woothemes.com/bookshop/product/animal-farm/"
+                                               class="woocommerce-LoopProduct-link"><img width="326" height="500"
+                                                                                         src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/107810-L.jpg?w=326"
+                                                                                         class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                                                         alt="107810-L"
+                                                                                         title="107810-L"/><span
+                                                    class="author">George Orwell</span>
+                                                <h2 class="woocommerce-loop-product__title">Animal Farm</h2><span
+                                                        class="format">Paperback</span>
+                                                <div class="star-rating" title="Rated 5.00 out of 5"><span
+                                                        style="width:100%"><strong
+                                                        class="rating">5.00</strong> out of 5</span></div>
+                                                <span class="price"><span class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>3.99</span></span>
+                                            </a><a rel="nofollow" href="/bookshop/?add-to-cart=147"
+                                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
+                                            to cart</a></li>
+
+
+                                        <li class="post-117 product type-product status-publish has-post-thumbnail product_cat-fantasy  instock shipping-taxable purchasable product-type-simple">
+                                            <a href="https://demo.woothemes.com/bookshop/product/j-r-r-tolkien-collection-part-2/"
+                                               class="woocommerce-LoopProduct-link"><img width="372" height="475"
+                                                                                         src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/0000000022-L.jpg?w=372"
+                                                                                         class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                                                         alt="0000000022-L"
+                                                                                         title="0000000022-L"/><span
+                                                    class="author">J. R. R. Tolkien</span>
+                                                <h2 class="woocommerce-loop-product__title">J. R. R. Tolkien Collection
+                                                    Part
+                                                    2</h2><span class="format">Audio Book</span>
+                                                <div class="star-rating" title="Rated 5.00 out of 5"><span
+                                                        style="width:100%"><strong
+                                                        class="rating">5.00</strong> out of 5</span></div>
+                                                <span class="price"><span class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>24.99</span></span>
+                                            </a><a rel="nofollow" href="/bookshop/?add-to-cart=117"
+                                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
+                                            to cart</a></li>
+
+
+                                        <li class="post-100 product type-product status-publish has-post-thumbnail product_cat-horror  instock sale shipping-taxable purchasable product-type-simple">
+                                            <a href="https://demo.woothemes.com/bookshop/product/it/"
+                                               class="woocommerce-LoopProduct-link"><img width="322" height="475"
+                                                                                         src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/401227-L.jpg?w=322"
+                                                                                         class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                                                         alt="401227-L"
+                                                                                         title="401227-L"/><span
+                                                    class="author">Stephen King</span>
+                                                <h2 class="woocommerce-loop-product__title">IT</h2><span class="format">Paperback</span>
+                                                <span class="onsale">Sale!</span>
+
+                                                <span class="price"><del><span
+                                                        class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>4.99</span></del> <ins><span
+                                                        class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>3.99</span></ins></span>
+                                            </a><a rel="nofollow" href="/bookshop/?add-to-cart=100"
+                                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
+                                            to cart</a></li>
+
+
+                                        <li class="post-165 product type-product status-publish has-post-thumbnail product_cat-childrens product_tag-harry-potter  instock shipping-taxable purchasable product-type-simple">
+                                            <a href="https://demo.woothemes.com/bookshop/product/harry-potter-and-the-goblet-of-fire/"
+                                               class="woocommerce-LoopProduct-link"><img width="296" height="475"
+                                                                                         src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/7236486-L.jpg?w=296"
+                                                                                         class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                                                         alt="7236486-L"
+                                                                                         title="7236486-L"/><span
+                                                    class="author">J. K. Rowling</span>
+                                                <h2 class="woocommerce-loop-product__title">Harry Potter and the Goblet
+                                                    of
+                                                    Fire</h2><span class="format">Hardback</span>
+                                                <span class="price"><span class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>9.99</span></span>
+                                            </a><a rel="nofollow" href="/bookshop/?add-to-cart=165"
+                                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
+                                            to cart</a></li>
+
+
+                                        <li class="post-92 product type-product status-publish has-post-thumbnail product_cat-childrens last instock sale shipping-taxable purchasable product-type-simple">
+                                            <a href="https://demo.woothemes.com/bookshop/product/on-beyond-zebra/"
+                                               class="woocommerce-LoopProduct-link"><img width="350" height="475"
+                                                                                         src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/0000000219-L.jpg?w=350"
+                                                                                         class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                                                         alt="0000000219-L"
+                                                                                         title="0000000219-L"/><span
+                                                    class="author">Dr. Seuss</span>
+                                                <h2 class="woocommerce-loop-product__title">On Beyond Zebra</h2><span
+                                                        class="format">Paperback</span>
+                                                <span class="onsale">Sale!</span>
+
+                                                <span class="price"><del><span
+                                                        class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>4.99</span></del> <ins><span
+                                                        class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>3.99</span></ins></span>
+                                            </a><a rel="nofollow" href="/bookshop/?add-to-cart=92"
+                                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
+                                            to cart</a></li>
+
+
+                                    </ul>
+
+
+                                </div>
+                            </section>
+                            <section class="storefront-product-section storefront-on-sale-products"
+                                     aria-label="On Sale Products"><h2 class="section-title">On Sale</h2>
+                                <div class="woocommerce columns-5">
+
+                                    <ul class="products">
+
+
+                                        <li class="post-100 product type-product status-publish has-post-thumbnail product_cat-horror first instock sale shipping-taxable purchasable product-type-simple">
+                                            <a href="https://demo.woothemes.com/bookshop/product/it/"
+                                               class="woocommerce-LoopProduct-link"><img width="322" height="475"
+                                                                                         src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/401227-L.jpg?w=322"
+                                                                                         class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                                                         alt="401227-L"
+                                                                                         title="401227-L"/><span
+                                                    class="author">Stephen King</span>
+                                                <h2 class="woocommerce-loop-product__title">IT</h2><span class="format">Paperback</span>
+                                                <span class="onsale">Sale!</span>
+
+                                                <span class="price"><del><span
+                                                        class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>4.99</span></del> <ins><span
+                                                        class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>3.99</span></ins></span>
+                                            </a><a rel="nofollow" href="/bookshop/?add-to-cart=100"
+                                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
+                                            to cart</a></li>
+
+
+                                        <li class="post-112 product type-product status-publish has-post-thumbnail product_cat-horror  instock sale shipping-taxable purchasable product-type-simple">
+                                            <a href="https://demo.woothemes.com/bookshop/product/needful-things/"
+                                               class="woocommerce-LoopProduct-link"><img width="321" height="531"
+                                                                                         src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/needfulthings00step_0001.jpg?w=321"
+                                                                                         class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                                                         alt="needfulthings00step_0001"
+                                                                                         title="needfulthings00step_0001"/><span
+                                                    class="author">Stephen King</span>
+                                                <h2 class="woocommerce-loop-product__title">Needful Things</h2><span
+                                                        class="format">Paperback</span>
+                                                <span class="onsale">Sale!</span>
+
+                                                <span class="price"><del><span
+                                                        class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>6.99</span></del> <ins><span
+                                                        class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>5.99</span></ins></span>
+                                            </a><a rel="nofollow" href="/bookshop/?add-to-cart=112"
+                                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
+                                            to cart</a></li>
+
+
+                                        <li class="post-92 product type-product status-publish has-post-thumbnail product_cat-childrens  instock sale shipping-taxable purchasable product-type-simple">
+                                            <a href="https://demo.woothemes.com/bookshop/product/on-beyond-zebra/"
+                                               class="woocommerce-LoopProduct-link"><img width="350" height="475"
+                                                                                         src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/0000000219-L.jpg?w=350"
+                                                                                         class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                                                         alt="0000000219-L"
+                                                                                         title="0000000219-L"/><span
+                                                    class="author">Dr. Seuss</span>
+                                                <h2 class="woocommerce-loop-product__title">On Beyond Zebra</h2><span
+                                                        class="format">Paperback</span>
+                                                <span class="onsale">Sale!</span>
+
+                                                <span class="price"><del><span
+                                                        class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>4.99</span></del> <ins><span
+                                                        class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>3.99</span></ins></span>
+                                            </a><a rel="nofollow" href="/bookshop/?add-to-cart=92"
+                                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
+                                            to cart</a></li>
+
+
+                                        <li class="post-93 product type-product status-publish has-post-thumbnail product_cat-childrens  instock sale shipping-taxable purchasable product-type-simple">
+                                            <a href="https://demo.woothemes.com/bookshop/product/the-cat-in-the-hats-great-big-flap-book/"
+                                               class="woocommerce-LoopProduct-link"><img width="429" height="475"
+                                                                                         src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/0000000221-L.jpg?w=429"
+                                                                                         class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                                                         alt="0000000221-L"
+                                                                                         title="0000000221-L"/><span
+                                                    class="author">Dr. Seuss</span>
+                                                <h2 class="woocommerce-loop-product__title">The Cat in the Hat&#8217;s
+                                                    Great
+                                                    Big Flap Book</h2><span class="format">Hardback</span>
+                                                <span class="onsale">Sale!</span>
+
+                                                <span class="price"><del><span
+                                                        class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>14.99</span></del> <ins><span
+                                                        class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>12.99</span></ins></span>
+                                            </a><a rel="nofollow" href="/bookshop/?add-to-cart=93"
+                                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
+                                            to cart</a></li>
+
+
+                                        <li class="post-110 product type-product status-publish has-post-thumbnail product_cat-fantasy last instock sale shipping-taxable purchasable product-type-simple">
+                                            <a href="https://demo.woothemes.com/bookshop/product/the-lord-of-the-rings-the-fellowship-of-the-ring-2/"
+                                               class="woocommerce-LoopProduct-link"><img width="305" height="500"
+                                                                                         src="https://demo.woothemes.com/bookshop/wp-content/uploads/sites/94/2016/02/7382917-L.jpg?w=305"
+                                                                                         class="attachment-shop_catalog size-shop_catalog wp-post-image"
+                                                                                         alt="7382917-L"
+                                                                                         title="7382917-L"/><span
+                                                    class="author">J. R. R. Tolkien</span>
+                                                <h2 class="woocommerce-loop-product__title">The Lord of the Rings
+                                                    &#8211;
+                                                    The Fellowship of the Ring</h2><span class="format">Hardback</span>
+                                                <span class="onsale">Sale!</span>
+
+                                                <span class="price"><del><span
+                                                        class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>23.99</span></del> <ins><span
+                                                        class="woocommerce-Price-amount amount"><span
+                                                        class="woocommerce-Price-currencySymbol">&pound;</span>20.99</span></ins></span>
+                                            </a><a rel="nofollow" href="/bookshop/?add-to-cart=110"
+                                                   class="button product_type_simple add_to_cart_button ajax_add_to_cart">Add
+                                            to cart</a></li>
+
+
+                                    </ul>
+
+
+                                </div>
+                            </section>
+                        </main><!-- #main -->
+                    </div><!-- #primary -->
+
+                </div><!-- .col-full -->
+            </div><!-- #content -->
+
+        </div><!-- #page -->
+    </div>
+
+{% endblock content %}
+{% block javascript %}
+    <script>dataLayer = [{"settings_ga_id": "UA-25052016-1"}]</script>
+    <noscript>
+        <iframe src="//www.googletagmanager.com/ns.html?id=GTM-W64W8Q" height="0" width="0"
+                style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+        var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = '//www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-W64W8Q');</script>
+    <script type="application/ld+json">
+        {"@context":"https:\/\/schema.org\/","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":"1","item":{"name":"Home"}}]}
+
+    </script>
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var wc_add_to_cart_params = {
+            "ajax_url": "\/bookshop\/wp-admin\/admin-ajax.php",
+            "wc_ajax_url": "\/bookshop\/?wc-ajax=%%endpoint%%",
+            "i18n_view_cart": "View cart",
+            "cart_url": "https:\/\/demo.woothemes.com\/bookshop\/cart\/",
+            "is_cart": "",
+            "cart_redirect_after_add": "no"
+        };
+        /* ]]> */
+    </script>
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var woocommerce_params = {
+            "ajax_url": "\/bookshop\/wp-admin\/admin-ajax.php",
+            "wc_ajax_url": "\/bookshop\/?wc-ajax=%%endpoint%%"
+        };
+        /* ]]> */
+    </script>
+    <script type='text/javascript'>
+        /* <![CDATA[ */
+        var wc_cart_fragments_params = {
+            "ajax_url": "\/bookshop\/wp-admin\/admin-ajax.php",
+            "wc_ajax_url": "\/bookshop\/?wc-ajax=%%endpoint%%",
+            "fragment_name": "wc_fragments"
+        };
+        /* ]]> */
+    </script>
+    <script type='text/javascript'
+            src='https://demo.woothemes.com/bookshop/_static/??-eJylkt1OwzAMhV8I15o0TesF2jUPwAOkidu6beIQJ9t4e0o3UCUQonDnn3M+J5bxEsFKyBQyxql0HBQvIla8p2QJjSplxUGxTYvMoXEOsoA1KVeeQzXoA/6aMrwUSq/QTGLHwve0WtLnpz/gdBbKyDRH1S3aDvn82ar9D8r7YqBNpvOzSb8D5Z48KTbze7WXuIJ8lH5waZZEy7CVL5gzdyazhK1OHTnCxGGEVmxRaPm6FbHeR0/GUfpyHBzsVBzd5BHIN+Tu/ZN/3O3rQ72vj4d6eAPSY/hZ'></script>
+
+    <script type="text/javascript">window.NREUM || (NREUM = {});
+    NREUM.info = {
+        "beacon": "bam.nr-data.net",
+        "licenseKey": "949ceaf672",
+        "applicationID": "14194630",
+        "transactionName": "MQZWYhAFXhdYAUBfWwhMdVUWDV8KFhZRW0QKAkBTTwxfCVwSVVFR",
+        "queueTime": 0,
+        "applicationTime": 176,
+        "atts": "HUFBFFgfTUgbAxYMTxse",
+        "errorBeacon": "bam.nr-data.net",
+        "agent": ""
+    }</script>
+{% endblock %}
+

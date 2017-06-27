@@ -1,0 +1,148 @@
+{% extends 'tpo/base.html' %}
+
+
+{% block content %}
+
+
+    <div class="profile-content-section">
+        <h3 class="content-section-title">Your orders list</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Index</th>
+                <th>Code</th>
+                <th>Date & Time</th>
+                <th>Total Cost</th>
+                <th>Details</th>
+            </tr>
+            <tr class="spacer"></tr>
+            </thead>
+            <tbody>
+            <tr class="">
+                <td>1</td>
+                <td>4243597</td>
+                <td>6/24/2017 11:21</td>
+                <td>34000R</td>
+                <td>
+                    <a class="user-orders-accordion" href="javascript:void(0)" onclick="showDetails(0)">
+                        <i id="icon0" class="glyphicon glyphicon-menu-down"></i>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td id="factorDetails0" colspan="7" class="hidden">
+                    <div class="clearfix user-orders-basket">
+                        <div class="basket-products">
+                            <div class="basket-products-header basket-row">
+                                <div class="clearfix">
+                                    <div class="basket-col left-col">
+                                        <span>Book Information</span>
+                                    </div>
+                                    <div class="basket-col right-col">
+                                        <span>Price</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="basket-row ">
+                                <div class="clearfix">
+                                    <div class="basket-col right-col equalizer-item">
+                                        <div class="basket-col-content">
+                                            <div class="basket-product-image">
+                                                <a href="/Product/پیراهن-رسمی-مردانه-9238">
+                                                    <img alt=" "
+                                                         src="http://127.0.0.1:8000/static/images/images.jpg">
+                                                </a>
+                                            </div>
+                                            <div class="basket-product-meta">
+                                                <h3>
+                                                    <a href="/Red-Herring" title="رد هرینگ">504 Words</a>
+                                                </h3>
+                                                <span class="title">
+                                                    <a href="/Product/پیراهن-رسمی-مردانه-9238"
+                                                       title="پیراهن رسمی مردانه">Essential words for Toefl
+                                                    </a>
+                                                </span>
+                                                <span class="product-config">
+                                                    <span class="product-code">
+                                                        <span>
+                                                            book code
+                                                        </span>
+                                                        <span>
+                                                            14940
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                                <span class="product-config-size">
+<span>Catagory:</span>
+<span> Vocabulary</span>
+</span>
+                                                <span class="product-config-quantity seprate">
+<span>count</span>
+<span>1</span>
+</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="basket-col right-col equalizer-item">
+                                        <div class="basket-col-content">
+                                            <span class="price">
+<span> unit price </span>
+                                                <span class="pull-right">
+<span class="price">۱۱۹,۰۰۰</span>
+<span class="currency">تومان</span>
+</span>
+                                            </span>
+                                            <span class="discount-price">
+                                                <span>
+<i class="icon icon-discount"></i>
+تخفیف
+</span>
+                                                <span class="pull-right">
+<span class="price">۰</span>
+<span class="currency">تومان</span>
+</span>
+                                            </span>
+                                            <span class="final-price">
+                                                <span class="title">Final Price</span>
+                                                <span class="pull-right">
+<span class="price">۱۱۹,۰۰۰</span>
+<span class="currency">تومان</span>
+</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr class="">
+                <td>1</td>
+                <td>4243597</td>
+                <td>6/24/2017 11:21</td>
+                <td>34000R</td>
+                <td>
+                    <a class="user-orders-accordion" href="javascript:void(0)">
+                        <i class="glyphicon glyphicon-menu-down"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        function showDetails(n) {
+            var sectionId = 'factorDetails' + n;
+            $("#"+sectionId).toggleClass('hidden');
+            var iconSectionId = 'icon' + n;
+            $("#"+iconSectionId).toggleClass('glyphicon-menu-down');
+            $("#"+iconSectionId).toggleClass('glyphicon-menu-up');
+        }
+    </script>
+{% endblock %}
+
