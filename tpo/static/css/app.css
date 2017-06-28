@@ -487,3 +487,6 @@ ul.products li.product .woocommerce-loop-product__title {
 
 /*basket*/
 
+.borderless td, .borderless th {
+    border: none;
+}

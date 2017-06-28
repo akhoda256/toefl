@@ -4,7 +4,7 @@
 {% block content %}
 
     <h2>Your Shopping Basket</h2>
-    <table class="table">
+    <table class="table borderless">
         <thead>
         <tr style="background-color: #f2f5f7;">
             <th>Index</th>
@@ -14,7 +14,7 @@
         </thead>
         <tbody>
         {% for basketItem in basketItems %}
-            <tr>
+            <tr id="basketItem{{ forloop.counter }}">
                 <th class="col-sm-1" scope="row"
                     style="vertical-align: middle; text-align: center;">{{ forloop.counter }}</th>
                 <td class="col-sm-7">
@@ -42,7 +42,7 @@
                             </p>
                         </div>
                         <div>
-                            <a href="javascript:void(0)" style="text-decoration: none;" onclick="removeBook({{ basketItem.id }})">
+                            <a href="javascript:void(0)" style="text-decoration: none;" onclick="removeBook({{ basketItem.id }}, {{ forloop.counter }})">
                                 Delete Book from Basket
                             </a>
                         </div>
@@ -67,20 +67,22 @@
 {% block javascript %}
     <script>
 
-        function removeBook(id) {
+        function removeBook(nId, nItr) {
             $.ajax({
                 type: "POST",
                 url: "/shop/removeBasket/",
                 data: {
-                    'basketItemId': 1
+                    'basketItemId': nId
                 }
             }).done(function (data) {
                 console.log(data);
                 if (data.status == 'success') {
                     alert('success');
+                    var itemId = '#basketItem'+nItr;
+                    $(itemId).remove();
                 }
                 else {
-                    alert("This book has recently added to your basket.");
+                    alert("Error.");
                 }
             });
         }

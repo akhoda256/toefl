@@ -68,3 +68,9 @@ def showBasket(request):
     csrfToken = request.META.get('CSRF_COOKIE', None)
     basketItems = BasketItem.objects.filter(csrfToken=csrfToken)
     return render_to_response('ebookShop/basket.html', {'basketItems': basketItems})
+
+
+@csrf_exempt
+def showOrders(request):
+    basketItems = BasketItem.objects.all()
+    return render_to_response('ebookShop/user-orders.html', {'basketItems': basketItems})
